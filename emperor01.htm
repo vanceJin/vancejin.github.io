@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+中国之始祖──黄帝
+
+◎西元前二六九八 ~ 二五九八
+
+![](http://www.drbachinese.org/online_reading_simplified/sf_others/WaterMirror1/images/emperor01.jpg)
+
+姓公孙，名轩辕。于四千六百余年前，生于河南轩辕丘。初为部落酋长，一面练武，一面教化。此时，炎帝（神农）第八代榆罔，无力治天下，各部落互相攻打，为救民苦，而灭榆罔，各部落归顺。南方九黎之君蚩尤，发兵攻轩辕，经过激烈鏖战，蚩尤兵败被杀。各部落酋长，拥护为帝，以土德王，土色黄，故为黄帝，建都有熊。英明领导，大公无私，政治安定，文化进步。陆有车，水有舟，发明指南针及弓箭等。其后嫘祖，养蚕织布，其臣仓颉造字，大挠作甲子等。在位百年崩，葬于桥山。后人尊为中国之始祖。
+
+赞曰
+
+轩辕黄帝　中国祖纪　鏖战蚩尤　造指南器
+
+发明农业　养蚕耕地　教化大兴　不遗余力
+
+又说偈曰
+
+天生圣者教黎民　饮食衣服日日新
+
+神机妙算平敌寇　雄才大略扫妖氛
+
+风雷变化惊天地　金木交并破魔军
+
+运转五行生克理　文字般若震古今
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<p>中国之始祖──黄帝</p>
+
+<p>◎西元前二六九八 ~ 二五九八</p>
+
+<p><img src="http://www.drbachinese.org/online_reading_simplified/sf_others/WaterMirror1/images/emperor01.jpg" alt="" title=""></p>
+
+<p>姓公孙，名轩辕。于四千六百余年前，生于河南轩辕丘。初为部落酋长，一面练武，一面教化。此时，炎帝（神农）第八代榆罔，无力治天下，各部落互相攻打，为救民苦，而灭榆罔，各部落归顺。南方九黎之君蚩尤，发兵攻轩辕，经过激烈鏖战，蚩尤兵败被杀。各部落酋长，拥护为帝，以土德王，土色黄，故为黄帝，建都有熊。英明领导，大公无私，政治安定，文化进步。陆有车，水有舟，发明指南针及弓箭等。其后嫘祖，养蚕织布，其臣仓颉造字，大挠作甲子等。在位百年崩，葬于桥山。后人尊为中国之始祖。</p>
+
+<p>赞曰</p>
+
+<p>轩辕黄帝　中国祖纪　鏖战蚩尤　造指南器</p>
+
+<p>发明农业　养蚕耕地　教化大兴　不遗余力</p>
+
+<p>又说偈曰</p>
+
+<p>天生圣者教黎民　饮食衣服日日新</p>
+
+<p>神机妙算平敌寇　雄才大略扫妖氛</p>
+
+<p>风雷变化惊天地　金木交并破魔军</p>
+
+<p>运转五行生克理　文字般若震古今</p>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "emperor01.htm";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
