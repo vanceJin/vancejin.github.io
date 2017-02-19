@@ -1,0 +1,172 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+#一、预备
+##1. 了解软件测试
+2016-12-27 周二
+
+##2. 如何设计测试用例
+2016-12-29 周四
+
+##3. 控制流图(CFG)
+2016-12-31 周六
+
+#二、需求
+2017-01-02 周二
+
+重点：  
+1. 软件需求   
+2. 软件需求文档
+
+作业：
+1. 分析ERP业务，作成软件需求规格说明书
+2. 主要作成内容是业务流程图与具体需求。(有模板)
+
+##Readmine
+2017-01-05 周四
+
+##测试设计技术
+2017-01-07 周六
+
+本章要点：   
+1. 分类与种类
+2. 测试设计技术一：判定表、用例分析和状态迁移
+3. 测试设计技术二：等价类、边界值和All-pair
+
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<h1 id="">一、预备</h1>
+
+<h2 id="1">1. 了解软件测试</h2>
+
+<p>2016-12-27 周二</p>
+
+<h2 id="2">2. 如何设计测试用例</h2>
+
+<p>2016-12-29 周四</p>
+
+<h2 id="3cfg">3. 控制流图(CFG)</h2>
+
+<p>2016-12-31 周六</p>
+
+<h1 id="">二、需求</h1>
+
+<p>2017-01-02 周二</p>
+
+<p>重点： <br>
+1. 软件需求 <br>
+2. 软件需求文档</p>
+
+<p>作业：
+1. 分析ERP业务，作成软件需求规格说明书
+2. 主要作成内容是业务流程图与具体需求。(有模板)</p>
+
+<h2 id="readmine">Readmine</h2>
+
+<p>2017-01-05 周四</p>
+
+<h2 id="">测试设计技术</h2>
+
+<p>2017-01-07 周六</p>
+
+<p>本章要点： <br>
+1. 分类与种类
+2. 测试设计技术一：判定表、用例分析和状态迁移
+3. 测试设计技术二：等价类、边界值和All-pair</p>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "yubei.html";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
