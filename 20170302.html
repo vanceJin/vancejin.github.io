@@ -59,6 +59,62 @@
 ##1.4 小结
 这一章介绍了什么是SQL以及它为什么很有用。因为SQL使用来与数据库打交道的，所以我们也复习了一些基本的数据库术语。
 
+#附录A 样例表脚本
+##A.1 样例表
+本书中所用的表为一个假想的玩具经销商使用的订单录入系统的组成部分。这些表用来完成几项任务：   
+
+- 管理供应商；   
+- 管理产品目录；   
+- 管理客户列表；   
+- 录入客户订单。   
+完成她们需要五个表。以下各节给出每个表的描述。
+
+###表的描述
+下面对5个表及每个表内的列名进行介绍。
+
+__Vendors表__  
+
+Vendors表存储卖产品的供应商。每个供应商在这个表中有一个记录，供应商ID列（vendor_id）用于产品与供应商的匹配。
+
+表A-1 Vendors表的列
+
+- 所以表都应该有主键。这个表应该有vendor_id作为它的主键。
+
+__Products__
+
+Products表包含产品目录，每行一个产品。每个产品有唯一的ID（prod\_id列），并且借助vend_id（供应商的唯一ID）与供应商相关联。
+
+表A-2 Products表的列
+
+- 所以表都应该有主键。这个表用pro_id作为它的主键。
+- 为实施引用完整性，应该在vend\_id上定义一外键，关联它到Vendors的vend_id列。
+
+__Customers表__
+
+Customers表存储所有客户信息。每个客户有唯一的ID（cust_id列）。
+
+表A-3 Customers表的列
+
+- 所有表都应该有主键。这个表应该用cust\_id作为它的主键。
+
+__Orders表__
+
+Orders表存储客户订单（但不是订单细节）。每个订单唯一地进行编号（order\_num列）。Orders表按cust\_id列（关联到Customers表的客户唯一ID）关联到相应的客户。
+
+表A-4 Orders表的列
+
+- 所以表都应该有主键。这个表用order_num作为它的主键。
+
+- 为实施引用完整性，应该在cust\_id上定义一个外键，关联它到Customers的cust\_id列。
+
+__OrderItems表__
+
+OrderItems表存储每个订单中的实际物品，每个订单的每个物品一行。对于Orders表的每一行，在OrderItems表中有一行或多行。每个订单物品由订单号加订单物品（第一个物品、第二个物品等）唯一标识。订单物品用order_num列（关联到Orders表中订单的唯一ID）与其相应的订单相关联。此外，每个订单物品包含该物品的产品ID（把物品关联到Products表）。
+
+表A-5 OrderItems表的列
+
+- 所以表都应该有主键。这个表应该有order\_num和order\_item作为它的主键。
+- 为实施引用完整性，应该在order\_num和prod\_id上定义外键，关联prod\_id到products的prod\_id列。
 
 
 <!-- markdown end -->
@@ -115,6 +171,77 @@
 <h2 id="14">1.4 小结</h2>
 
 <p>这一章介绍了什么是SQL以及它为什么很有用。因为SQL使用来与数据库打交道的，所以我们也复习了一些基本的数据库术语。</p>
+
+<h1 id="a">附录A 样例表脚本</h1>
+
+<h2 id="a1">A.1 样例表</h2>
+
+<p>本书中所用的表为一个假想的玩具经销商使用的订单录入系统的组成部分。这些表用来完成几项任务：   </p>
+
+<ul>
+<li>管理供应商；   </li>
+<li>管理产品目录；   </li>
+<li>管理客户列表；   </li>
+<li>录入客户订单。 <br>
+完成她们需要五个表。以下各节给出每个表的描述。</li>
+</ul>
+
+<h3 id="">表的描述</h3>
+
+<p>下面对5个表及每个表内的列名进行介绍。</p>
+
+<p><strong>Vendors表</strong>  </p>
+
+<p>Vendors表存储卖产品的供应商。每个供应商在这个表中有一个记录，供应商ID列（vendor_id）用于产品与供应商的匹配。</p>
+
+<p>表A-1 Vendors表的列</p>
+
+<ul>
+<li>所以表都应该有主键。这个表应该有vendor_id作为它的主键。</li>
+</ul>
+
+<p><strong>Products</strong></p>
+
+<p>Products表包含产品目录，每行一个产品。每个产品有唯一的ID（prod_id列），并且借助vend_id（供应商的唯一ID）与供应商相关联。</p>
+
+<p>表A-2 Products表的列</p>
+
+<ul>
+<li>所以表都应该有主键。这个表用pro_id作为它的主键。</li>
+<li>为实施引用完整性，应该在vend_id上定义一外键，关联它到Vendors的vend_id列。</li>
+</ul>
+
+<p><strong>Customers表</strong></p>
+
+<p>Customers表存储所有客户信息。每个客户有唯一的ID（cust_id列）。</p>
+
+<p>表A-3 Customers表的列</p>
+
+<ul>
+<li>所有表都应该有主键。这个表应该用cust_id作为它的主键。</li>
+</ul>
+
+<p><strong>Orders表</strong></p>
+
+<p>Orders表存储客户订单（但不是订单细节）。每个订单唯一地进行编号（order_num列）。Orders表按cust_id列（关联到Customers表的客户唯一ID）关联到相应的客户。</p>
+
+<p>表A-4 Orders表的列</p>
+
+<ul>
+<li><p>所以表都应该有主键。这个表用order_num作为它的主键。</p></li>
+<li><p>为实施引用完整性，应该在cust_id上定义一个外键，关联它到Customers的cust_id列。</p></li>
+</ul>
+
+<p><strong>OrderItems表</strong></p>
+
+<p>OrderItems表存储每个订单中的实际物品，每个订单的每个物品一行。对于Orders表的每一行，在OrderItems表中有一行或多行。每个订单物品由订单号加订单物品（第一个物品、第二个物品等）唯一标识。订单物品用order_num列（关联到Orders表中订单的唯一ID）与其相应的订单相关联。此外，每个订单物品包含该物品的产品ID（把物品关联到Products表）。</p>
+
+<p>表A-5 OrderItems表的列</p>
+
+<ul>
+<li>所以表都应该有主键。这个表应该有order_num和order_item作为它的主键。</li>
+<li>为实施引用完整性，应该在order_num和prod_id上定义外键，关联prod_id到products的prod_id列。</li>
+</ul>
 <!-- content end -->
 </div>
 <br>
