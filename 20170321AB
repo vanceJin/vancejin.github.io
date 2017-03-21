@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+			<h1>
+            <a href="/" id="title"></a>
+			</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+__乾，元亨利贞，__文言备也。   
+__象曰：天行健，君子以自强不息，__   
+__九三，君子终日乾乾，夕惕若，厉，无咎，__处下体之极，居上体之下，纯修下道，则居上之德废；纯修上道，则处下之礼旷，故终日乾乾，至于夕，惕犹若厉也。   
+__九五，飞龙在天，利见大人，__不行不跃而在乎天，故曰飞龙也。龙德在天，则大人之路亨也。夫位以德兴，德以位叙，以至德而处盛位，万物之睹，不亦宜乎。   
+上九，亢龙有悔。   
+__彖曰：大哉乾元，万物资始，乃统天，云行雨施，品物流形，大明终始，六位时成，时乘六龙以御天，乾道变化，各正性命，__大明乎终始之道，故六位不失其时而成也。升降无常，随时而用，处则乘潜龙，出则乘飞龙，故曰“时乘六龙”也。__保合大和，乃利贞，__不和而刚暴也。__首出庶物，万国咸宁。__万国所以甯，各以有君也。   
+__文言曰：元者善之长也。亨者嘉之会也。利者义之和也。贞者事之干也。君子体仁，足以长人，嘉会足以合礼，利物足以和义，贞固足以干事，君子行此四德者。故曰：乾，元亨利贞。___   
+__君子终日乾乾，夕惕若，厉，无咎。何谓也？子曰：君子进德修业，忠信，所以进德也。修辞立其诚，所以居业也。是故居上位而不骄，在下位而不忧，__居下体之上，在上体之下，明夫终敝，故不骄也。知夫至至，故不忧也。__故乾乾因其时而惕，__惕，怵惕之谓也。__虽危无咎矣飞龙在天，利见大人。何谓也？子曰：同声相应，同气相求，水流湿，火就燥，云从龙，风从虎，圣人作而万物睹，亢龙有悔。何谓也？子曰：贵而无位，高而无民，下无阴也。贤人在下位而无辅，__贤人虽在下，而当位，不为之助。__是以动而有悔也。君子学以聚之，问以辨之，__以君德而处下体，资纳于物者也。__宽以居之，仁以行之，夫大人者，与天地合其德，与日月合其明，与四时合其序，与鬼神合其吉凶，先天而天弗违，后天而奉天时，天且弗违，而况于人乎。况于鬼神乎。亢之为言也。知进而不知退，知存而不知亡，知得而不知丧，其唯圣人乎。知进退存亡而不失其正者，其唯圣人乎。__
+__坤。__   
+__象曰：地势坤，君子以厚德载物。__   
+__彖曰：至哉坤元，万物资生，乃顺承天，坤厚载物，德合无疆，含弘光大，品物咸亨。文言曰：坤至柔而动也刚，至静而德方，含万物而化光，坤道其顺乎。承天而时行，积善之家，必有馀庆，积不善之家，必有馀殃，君子敬以直内，义以方外，敬义立而德不孤。__
+
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<p><strong>乾，元亨利贞，</strong>文言备也。 <br>
+<strong>象曰：天行健，君子以自强不息，</strong> <br>
+<strong>九三，君子终日乾乾，夕惕若，厉，无咎，</strong>处下体之极，居上体之下，纯修下道，则居上之德废；纯修上道，则处下之礼旷，故终日乾乾，至于夕，惕犹若厉也。 <br>
+<strong>九五，飞龙在天，利见大人，</strong>不行不跃而在乎天，故曰飞龙也。龙德在天，则大人之路亨也。夫位以德兴，德以位叙，以至德而处盛位，万物之睹，不亦宜乎。 <br>
+上九，亢龙有悔。 <br>
+<strong>彖曰：大哉乾元，万物资始，乃统天，云行雨施，品物流形，大明终始，六位时成，时乘六龙以御天，乾道变化，各正性命，</strong>大明乎终始之道，故六位不失其时而成也。升降无常，随时而用，处则乘潜龙，出则乘飞龙，故曰“时乘六龙”也。<strong>保合大和，乃利贞，</strong>不和而刚暴也。<strong>首出庶物，万国咸宁。</strong>万国所以甯，各以有君也。 <br>
+<strong>文言曰：元者善之长也。亨者嘉之会也。利者义之和也。贞者事之干也。君子体仁，足以长人，嘉会足以合礼，利物足以和义，贞固足以干事，君子行此四德者。故曰：乾，元亨利贞。_</strong> <br>
+<strong>君子终日乾乾，夕惕若，厉，无咎。何谓也？子曰：君子进德修业，忠信，所以进德也。修辞立其诚，所以居业也。是故居上位而不骄，在下位而不忧，</strong>居下体之上，在上体之下，明夫终敝，故不骄也。知夫至至，故不忧也。<strong>故乾乾因其时而惕，</strong>惕，怵惕之谓也。<strong>虽危无咎矣飞龙在天，利见大人。何谓也？子曰：同声相应，同气相求，水流湿，火就燥，云从龙，风从虎，圣人作而万物睹，亢龙有悔。何谓也？子曰：贵而无位，高而无民，下无阴也。贤人在下位而无辅，</strong>贤人虽在下，而当位，不为之助。<strong>是以动而有悔也。君子学以聚之，问以辨之，</strong>以君德而处下体，资纳于物者也。<strong>宽以居之，仁以行之，夫大人者，与天地合其德，与日月合其明，与四时合其序，与鬼神合其吉凶，先天而天弗违，后天而奉天时，天且弗违，而况于人乎。况于鬼神乎。亢之为言也。知进而不知退，知存而不知亡，知得而不知丧，其唯圣人乎。知进退存亡而不失其正者，其唯圣人乎。</strong>
+<strong>坤。</strong> <br>
+<strong>象曰：地势坤，君子以厚德载物。</strong> <br>
+<strong>彖曰：至哉坤元，万物资生，乃顺承天，坤厚载物，德合无疆，含弘光大，品物咸亨。文言曰：坤至柔而动也刚，至静而德方，含万物而化光，坤道其顺乎。承天而时行，积善之家，必有馀庆，积不善之家，必有馀殃，君子敬以直内，义以方外，敬义立而德不孤。</strong></p>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pages = [];
+            //path
+            var path = "20170321AB";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.pages.length; ++i)
+                if (path == data.pages[i].path) {
+                    now = i;
+                    pages.push({"select": true, "path": data.pages[i].path, "title": data.pages[i].title});
+                }
+                else {
+                    pages.push({"select": false, "path": data.pages[i].path, "title": data.pages[i].title});
+                }
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": pages});
+            $("#pages").append(pagesHtml);
+            var post = data.pages[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
