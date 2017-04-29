@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+#第1章 因特网、万维网和HTTP协议
+##1.1 Web体系结构
+Web有三个核心概念：资源（resource）、URI（Uniform Resource Identifier，统一标识符）和表示（representation）。
+###1.1.1 资源
+任何带有URI标识的东西都是**资源**。资源自身是一个或多个实体的概念性映射。
+###1.1.2 URI
+每个资源都可以通过唯一的URI访问。你可以把URI看成一个资源的主键（primary key）。一个URI只能对应一个资源，但是多个URI可以指向同一个资源。   
+URI分为两种类型：**统一资源定位符**和**统一资源名**。URL既标识一个资源，又指定了访问该资源的方法，而URN仅仅是一个资源的唯一标识符。
+
+
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<h1 id="1http">第1章 因特网、万维网和HTTP协议</h1>
+
+<h2 id="11web">1.1 Web体系结构</h2>
+
+<p>Web有三个核心概念：资源（resource）、URI（Uniform Resource Identifier，统一标识符）和表示（representation）。</p>
+
+<h3 id="111">1.1.1 资源</h3>
+
+<p>任何带有URI标识的东西都是<strong>资源</strong>。资源自身是一个或多个实体的概念性映射。</p>
+
+<h3 id="112uri">1.1.2 URI</h3>
+
+<p>每个资源都可以通过唯一的URI访问。你可以把URI看成一个资源的主键（primary key）。一个URI只能对应一个资源，但是多个URI可以指向同一个资源。 <br>
+URI分为两种类型：<strong>统一资源定位符</strong>和<strong>统一资源名</strong>。URL既标识一个资源，又指定了访问该资源的方法，而URN仅仅是一个资源的唯一标识符。</p>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "2017042901.html";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
