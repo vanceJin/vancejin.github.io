@@ -25,7 +25,6 @@
 	</div>
 <div id="md" style="display: none;">
 <!-- markdown -->
-#界面测试
 ##1. GUI(图形用户界面)控件认知
 ##2. GUI设计要素
 ##3. GUI设计要点
@@ -34,8 +33,6 @@
 </div>
 <div class="entry" id="main">
 <!-- content -->
-<h1 id="">界面测试</h1>
-
 <h2 id="1gui">1. GUI(图形用户界面)控件认知</h2>
 
 <h2 id="2gui">2. GUI设计要素</h2>
