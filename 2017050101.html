@@ -32,6 +32,33 @@
 问题：Access-Control-Allow-Origin   
 问题描述：在某域名下使用Ajax向另一个域名下的页面请求数据，会遇到跨域问题。另一个域名必须在response中添加 Access-Control-Allow-Origin 的header，才能让前者成功拿到数据。
 
+解决：   
+添加包Microsoft.AspNet.Cors.5.2.3Microsoft.AspNet.WebApi.Cors.5.2.3；
+
+![](http://i4.buimg.com/567571/0c98395b7cf010ae.jpg)
+![](http://i4.buimg.com/567571/eb15a74f60fb71b6.jpg)
+![](http://i2.muimg.com/567571/19bb51b2a2b60c51.jpg)
+
+结果：
+![](http://i1.piimg.com/567571/3ea10828c1f0a3bc.jpg)
+Test.html:
+![](http://i4.buimg.com/567571/e5b0513bcf3ae8d9.jpg)
+GetAllUsers:
+![](http://i4.buimg.com/567571/e9d0451c612cbbc4.jpg)
+GetUserById/1:
+![](http://i1.piimg.com/567571/e4d77f000f612e57.jpg)
+GetUserById/1:
+![](http://i2.muimg.com/567571/97b6103f33eefe9e.jpg)
+GetUserById/2:
+![](http://i4.buimg.com/567571/f13904b71f584d44.jpg)
+GetUserById/2:
+
+
+
+
+
+
+
 <!-- markdown end -->
 </div>
 <div class="entry" id="main">
@@ -42,6 +69,27 @@
 
 <p>问题：Access-Control-Allow-Origin <br>
 问题描述：在某域名下使用Ajax向另一个域名下的页面请求数据，会遇到跨域问题。另一个域名必须在response中添加 Access-Control-Allow-Origin 的header，才能让前者成功拿到数据。</p>
+
+<p>解决： <br>
+添加包Microsoft.AspNet.Cors.5.2.3Microsoft.AspNet.WebApi.Cors.5.2.3；</p>
+
+<p><img src="http://i4.buimg.com/567571/0c98395b7cf010ae.jpg" alt="" title="">
+<img src="http://i4.buimg.com/567571/eb15a74f60fb71b6.jpg" alt="" title="">
+<img src="http://i2.muimg.com/567571/19bb51b2a2b60c51.jpg" alt="" title=""></p>
+
+<p>结果：
+<img src="http://i1.piimg.com/567571/3ea10828c1f0a3bc.jpg" alt="" title="">
+Test.html:
+<img src="http://i4.buimg.com/567571/e5b0513bcf3ae8d9.jpg" alt="" title="">
+GetAllUsers:
+<img src="http://i4.buimg.com/567571/e9d0451c612cbbc4.jpg" alt="" title="">
+GetUserById/1:
+<img src="http://i1.piimg.com/567571/e4d77f000f612e57.jpg" alt="" title="">
+GetUserById/1:
+<img src="http://i2.muimg.com/567571/97b6103f33eefe9e.jpg" alt="" title="">
+GetUserById/2:
+<img src="http://i4.buimg.com/567571/f13904b71f584d44.jpg" alt="" title="">
+GetUserById/2:</p>
 <!-- content end -->
 </div>
 <br>
