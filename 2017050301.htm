@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+[Entity Framework Development Workflows](https://msdn.microsoft.com/en-us/library/ms178359.aspx#dbfmfcf)
+
+There are three ways you can work with data models and databases in the Entity Framework: Database First, Model First, and Code First.
+
+###Database First
+If you already have a database, the Entity Framework designer built into Visual Studio can automatically generate a data model that consists of classes and properties that correspond to existing database objects such as tables and columns. The information about your database structure (*store schema*), your data model (*conceptual model*), and the mapping between them is stored in XML in an .edmx file. The Entity Framework designer provides a graphical UI that you can use to display and edit the *.edmx* file.
+
+###数据库优先
+如果您已经有数据库, 则内置到 visual studio 中的实体框架设计器可以自动生成一个数据模型, 它由与现有数据库对象 (如表和列) 对应的类和属性组成。有关数据库结构 (存储架构)、数据模型 (概念模型) 以及它们之间的映射的信息以 xml 形式存储在. edmx 文件中。实体框架设计器提供了一个图形用户界面, 您可以使用该界面来显示和编辑. edmx 文件。
+
+###Model First
+If you don't have a database yet, you can begin by creating a model in an .edmx file by using the Entity Framework graphical designer in Visual Studio. When the model is finished, the Entity Framework designer can generate DDL (data definition language) statements to create the database. As in Database First, the .edmx file stores model and mapping information.
+
+###模型优先
+如果还没有数据库, 则可以通过使用 visual studio 中的实体框架图形设计器来开始创建一个模型. edmx 文件。当模型完成后, 实体框架设计器可以生成 DDL (数据定义语言) 语句来创建数据库。如在数据库中首先, edmx 文件存储模型和映射信息。
+
+###Code First
+Whether you have an existing database or not, you can use the Entity Framework without using the designer or an .edmx file. If you don't have a database, you can code your own classes and properties that correspond to tables and columns. If you do have a database, Entity Framework tools can generate the classes and properties that correspond to existing tables and columns. The mapping between the store schema and the conceptual model represented by your code is handled by convention and by a special mapping API. If you let Code First create the database, you can use Code First Migrations to automate the process of deploying the database to production. Migrations can also automate the deployment of database schema changes to production when your data model changes.
+
+###代码优先
+无论您是否有现有的数据库, 都可以不使用设计器或. edmx 文件来使用实体框架。如果没有数据库, 则可以为自己的类和属性编写对应于表和列的代码。如果确实有数据库, 实体框架工具可以生成与现有表和列对应的类和属性。存储架构和代码所表示的概念模型之间的映射由约定和特殊映射应用程序接口处理。如果让代码首先创建数据库, 则可以使用代码优先迁移来自动化将数据库部署到生产的过程。当数据模型发生变化时, 迁移还可以自动部署数据库架构更改到生产。
+
+Choose Code First for new development unless you want to use a graphical designer to model database objects and relationships. The Entity Framework designer only works with Database First and Model First. Before you choose Database First or Model First, however, consider how you want to handle updates to the data model after you create the database, and how you want to deploy the database and deploy updates to it. Code First Migrations automates the process of implementing and deploying database schema changes that result from data model changes. The advantages of Code First Migrations might outweigh the advantages of the Entity Framework designer.
+
+如果要使用图形设计器对数据库对象和关系进行建模, 请先选择 "代码" 以进行新的开发。实体框架设计器只使用数据库第优先和模型。但是, 在选择数据库优先或模型之前, 请考虑在创建数据库之后, 如何处理数据模型的更新, 以及如何部署数据库并将更新部署到它。代码优先迁移会自动执行和部署由数据模型更改导致的数据库架构更改的过程。代码优先迁移的优点可能大于实体框架设计器的优点。
+
+For more information, see [ASP.NET Data Access Content Map](http://go.microsoft.com/fwlink/p/?LinkId=282414).
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<p><a href="https://msdn.microsoft.com/en-us/library/ms178359.aspx#dbfmfcf">Entity Framework Development Workflows</a></p>
+
+<p>There are three ways you can work with data models and databases in the Entity Framework: Database First, Model First, and Code First.</p>
+
+<h3 id="databasefirst">Database First</h3>
+
+<p>If you already have a database, the Entity Framework designer built into Visual Studio can automatically generate a data model that consists of classes and properties that correspond to existing database objects such as tables and columns. The information about your database structure (<em>store schema</em>), your data model (<em>conceptual model</em>), and the mapping between them is stored in XML in an .edmx file. The Entity Framework designer provides a graphical UI that you can use to display and edit the <em>.edmx</em> file.</p>
+
+<h3 id="">数据库优先</h3>
+
+<p>如果您已经有数据库, 则内置到 visual studio 中的实体框架设计器可以自动生成一个数据模型, 它由与现有数据库对象 (如表和列) 对应的类和属性组成。有关数据库结构 (存储架构)、数据模型 (概念模型) 以及它们之间的映射的信息以 xml 形式存储在. edmx 文件中。实体框架设计器提供了一个图形用户界面, 您可以使用该界面来显示和编辑. edmx 文件。</p>
+
+<h3 id="modelfirst">Model First</h3>
+
+<p>If you don't have a database yet, you can begin by creating a model in an .edmx file by using the Entity Framework graphical designer in Visual Studio. When the model is finished, the Entity Framework designer can generate DDL (data definition language) statements to create the database. As in Database First, the .edmx file stores model and mapping information.</p>
+
+<h3 id="">模型优先</h3>
+
+<p>如果还没有数据库, 则可以通过使用 visual studio 中的实体框架图形设计器来开始创建一个模型. edmx 文件。当模型完成后, 实体框架设计器可以生成 DDL (数据定义语言) 语句来创建数据库。如在数据库中首先, edmx 文件存储模型和映射信息。</p>
+
+<h3 id="codefirst">Code First</h3>
+
+<p>Whether you have an existing database or not, you can use the Entity Framework without using the designer or an .edmx file. If you don't have a database, you can code your own classes and properties that correspond to tables and columns. If you do have a database, Entity Framework tools can generate the classes and properties that correspond to existing tables and columns. The mapping between the store schema and the conceptual model represented by your code is handled by convention and by a special mapping API. If you let Code First create the database, you can use Code First Migrations to automate the process of deploying the database to production. Migrations can also automate the deployment of database schema changes to production when your data model changes.</p>
+
+<h3 id="">代码优先</h3>
+
+<p>无论您是否有现有的数据库, 都可以不使用设计器或. edmx 文件来使用实体框架。如果没有数据库, 则可以为自己的类和属性编写对应于表和列的代码。如果确实有数据库, 实体框架工具可以生成与现有表和列对应的类和属性。存储架构和代码所表示的概念模型之间的映射由约定和特殊映射应用程序接口处理。如果让代码首先创建数据库, 则可以使用代码优先迁移来自动化将数据库部署到生产的过程。当数据模型发生变化时, 迁移还可以自动部署数据库架构更改到生产。</p>
+
+<p>Choose Code First for new development unless you want to use a graphical designer to model database objects and relationships. The Entity Framework designer only works with Database First and Model First. Before you choose Database First or Model First, however, consider how you want to handle updates to the data model after you create the database, and how you want to deploy the database and deploy updates to it. Code First Migrations automates the process of implementing and deploying database schema changes that result from data model changes. The advantages of Code First Migrations might outweigh the advantages of the Entity Framework designer.</p>
+
+<p>如果要使用图形设计器对数据库对象和关系进行建模, 请先选择 "代码" 以进行新的开发。实体框架设计器只使用数据库第优先和模型。但是, 在选择数据库优先或模型之前, 请考虑在创建数据库之后, 如何处理数据模型的更新, 以及如何部署数据库并将更新部署到它。代码优先迁移会自动执行和部署由数据模型更改导致的数据库架构更改的过程。代码优先迁移的优点可能大于实体框架设计器的优点。</p>
+
+<p>For more information, see <a href="http://go.microsoft.com/fwlink/p/?LinkId=282414">ASP.NET Data Access Content Map</a>.</p>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "2017050301.htm";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
