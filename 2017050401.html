@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+原本地址[Asp.net高级程序设计之ASP.NET简介（1）](http://www.cnblogs.com/pavkoo/archive/2010/09/09/1822706.html)
+
+#ASP.NET和传统WEB开发平台的不同之处 
+1.  提供一个完全面向对象编程模型（事件驱动，基于控件的构架，鼓励代码封装和代码重用）；
+2.  提供一个完全面向对象编程模型（事件驱动，基于控件的构架，鼓励代码封装和代码重用）；
+3.  致力于高性能（在执行前编译的方式。提供的特性：状态管理，数据绑定，动态绘图，安全模型）。   
+
+#ASP.NET的7大要点   
+1. ASP.NET是同.NET Framework集成在一起的；   
+2. ASP.NET是编译执行的，而不是解释执行的；   
+3. ASP.NET支持多语言；   
+4. ASP.NET运行在公共语言运行库内；   
+5. ASP.NET是面向对象的；  
+6. ASP.NET支持所有的浏览器；   
+7. ASP.NET易于部署和配置。   
+
+
+
+
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<p>原本地址<a href="http://www.cnblogs.com/pavkoo/archive/2010/09/09/1822706.html">Asp.net高级程序设计之ASP.NET简介（1）</a></p>
+
+<h1 id="aspnetweb">ASP.NET和传统WEB开发平台的不同之处</h1>
+
+<ol>
+<li>提供一个完全面向对象编程模型（事件驱动，基于控件的构架，鼓励代码封装和代码重用）；</li>
+<li>提供一个完全面向对象编程模型（事件驱动，基于控件的构架，鼓励代码封装和代码重用）；</li>
+<li>致力于高性能（在执行前编译的方式。提供的特性：状态管理，数据绑定，动态绘图，安全模型）。   </li>
+</ol>
+
+<h1 id="aspnet7">ASP.NET的7大要点</h1>
+
+<ol>
+<li>ASP.NET是同.NET Framework集成在一起的；   </li>
+<li>ASP.NET是编译执行的，而不是解释执行的；   </li>
+<li>ASP.NET支持多语言；   </li>
+<li>ASP.NET运行在公共语言运行库内；   </li>
+<li>ASP.NET是面向对象的；  </li>
+<li>ASP.NET支持所有的浏览器；   </li>
+<li>ASP.NET易于部署和配置。   </li>
+</ol>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "2017050401.html";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
