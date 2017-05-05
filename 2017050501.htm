@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+知识点：   
+XHTML语言   
+静态网页   
+动态网页   
+WEB服务器   
+Asp.net开发的预备知识   
+
+###静态网页
+早期的网页都是使用静态网页的，所谓的静态网页就是在网页中不包含有需要在服务器端执行的代码。比如一个含有JavaScript特效的HTML网页或一个含有flash的HTML网页，它们虽然在网页呈现的效果会“动”，甚至还有运行代码，但是都是在客户端执行的代码，因而算不上动态页面。   
+静态网页的好处是服务器只需要简单地将网页HTML创送给浏览器就行了。静态的缺点是维护起来困难，不能使用数据库带来的好处。
+
+###动态网页
+动态网页是网页中包含有需要在Web服务器执行的代码。当我们向Web服务器请求一个动态网页的时候，对于页面的HTML代码部分，Web服务器直接传送给浏览器了，而对于需要在Web服务器执行的代码，自然是Web服务器执行该部分代码并将最终的执行结果也就是HTML代码传送给浏览器，因为浏览器不认识动态代码。也就是不论以何种语言编写的动态网页，到达浏览器的时候都是HTML代码。   
+当然不同的编程语言编写的动态网页，Web服务器会以不同的方式运行这些代码，更专业一点的说法是Web服务器会交给不同的程序去执行这些代码，这些执行代码的程序我们称之为脚本引擎。Web服务器将这些脚本引擎的执行结果发送给浏览器。目前常见的动态网页jsp、asp、PHP及asp.net等。
+
+###Web服务器
+Web服务器是用来接受客户浏览器请求的，根据客户端浏览器请求决定如何显示网页内容。当我们打开一个网页或者其它文件时，Web服务器会设置决定如何将该文件的内容交给客户端。   
+目前比较流行的Web服务器有IIS（Internet Information Server）和Apache。前者是微软开发的，具有微软一贯的使用简单的特点，它运行Windows操作系统上，而Apache是一个开源软件，有Windows和Linux等系统下版本。我们做asp.net开发主要是使用IIS。   
+
+
+
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<p>知识点： <br>
+XHTML语言 <br>
+静态网页 <br>
+动态网页 <br>
+WEB服务器 <br>
+Asp.net开发的预备知识   </p>
+
+<h3 id="">静态网页</h3>
+
+<p>早期的网页都是使用静态网页的，所谓的静态网页就是在网页中不包含有需要在服务器端执行的代码。比如一个含有JavaScript特效的HTML网页或一个含有flash的HTML网页，它们虽然在网页呈现的效果会“动”，甚至还有运行代码，但是都是在客户端执行的代码，因而算不上动态页面。 <br>
+静态网页的好处是服务器只需要简单地将网页HTML创送给浏览器就行了。静态的缺点是维护起来困难，不能使用数据库带来的好处。</p>
+
+<h3 id="">动态网页</h3>
+
+<p>动态网页是网页中包含有需要在Web服务器执行的代码。当我们向Web服务器请求一个动态网页的时候，对于页面的HTML代码部分，Web服务器直接传送给浏览器了，而对于需要在Web服务器执行的代码，自然是Web服务器执行该部分代码并将最终的执行结果也就是HTML代码传送给浏览器，因为浏览器不认识动态代码。也就是不论以何种语言编写的动态网页，到达浏览器的时候都是HTML代码。 <br>
+当然不同的编程语言编写的动态网页，Web服务器会以不同的方式运行这些代码，更专业一点的说法是Web服务器会交给不同的程序去执行这些代码，这些执行代码的程序我们称之为脚本引擎。Web服务器将这些脚本引擎的执行结果发送给浏览器。目前常见的动态网页jsp、asp、PHP及asp.net等。</p>
+
+<h3 id="web">Web服务器</h3>
+
+<p>Web服务器是用来接受客户浏览器请求的，根据客户端浏览器请求决定如何显示网页内容。当我们打开一个网页或者其它文件时，Web服务器会设置决定如何将该文件的内容交给客户端。 <br>
+目前比较流行的Web服务器有IIS（Internet Information Server）和Apache。前者是微软开发的，具有微软一贯的使用简单的特点，它运行Windows操作系统上，而Apache是一个开源软件，有Windows和Linux等系统下版本。我们做asp.net开发主要是使用IIS。   </p>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "2017050501.htm";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
