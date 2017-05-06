@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+[原文地址](http://blog.csdn.net/zhoufoxcn/article/details/2944967)
+
+##知识点：
+XHTML语言   
+静态网页   
+动态网页   
+WEB服务器   
+Asp.net开发的预备知识   
+
+##内容
+HTML表单的提交方式
+HTM控件
+获取HTML表单内容
+乱码问题
+SQL注入
+服务器端表单
+HTML服务器控件
+
+###HTML表单的提交方式
+对于一个普通HTML表单来说，它有两个重要的属性：action和method。   
+action属性指明当前表单提交之后由哪个程序来处理，这个处理程序可以是任何动态网页或者servlet或者CGI（Common Gateway Interface），在asp.NET里面一般都是都aspx页面来处理。  
+method属性指明form表单的提交方式。它有两个可能值get和post。   
+
+具体说来get和post提交方式有如下两个区别：   
+（1）get方式提交的表单在地址栏会显示参数名和参数值，而post方式不会。用post提交参数相对来说更隐蔽一些，也相对安全一些。   
+（2）由于浏览器地址栏能输入的最大字符数有限制，所以用get方式提交不能处理参数值更大的表单，而post方式则没有这个限制。   
+
+###HTML控件
+HTML控件在上面的例子里已经用到，它就是指用HTML表单里的一些列元素来提供用户交互，它们都是类似&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;这样的标记。要呈现什么的形式由type属性来决定，可以有“text”、“password”、“radio”、“checkbox”、“submit”及“reset”等，分别呈现为文本框、密码框、单选框、复选框及提交按钮和重置按钮等。
+
+###获取表单值
+通过用get方式提交表单我们可以看到提交到服务器的时候，在网页后面有“?username=zhoufoxcn&pwd=12345”这么一个字符串，也就是以表单里HTML控件的名字=控件值的方式，并且如果存在多个控件，彼此之间以“&”分割，那么我们就可以以控件名来获取控件值。获取HTML控件值常见有以下集中方式：   
+![2017-05-06_105639.jpg](https://ooo.0o0.ooo/2017/05/06/590d3b7e5241d.jpg)
+
+###服务器端表单
+`
+<form id="form1" runat="server">   
+`
+在服务器端表单里可以不用指定action属性，表示由当前页面处理，也可以不指定method属性，默认为post方式提交表单。在服务器端表单里，我们不光可以使用HTML控件，还可以使用HTML服务器控件，还可以使用asp.net控件。   
+
+
+###HTML服务器控件
+HTML服务器控件与普通服务器控件不同的是：在普通HTML控件中加上了一个id属性和一个runat=”server”标记。如下就是一个HTML服务器控件：   
+`
+<input type="text" runat="server" id="txtUserName" />
+`   
+HTML服务器控件有几个限制：   
+在整个asp.net页面中这个控件id的必须唯一，并且HTML服务器控件只能放在HTML服务器表单中。因为一个asp.net页面只能有一个服务器表单，所以说在服务器表单中控件的id值必须唯一，因为我们在编程的时候通过这个id来访问HTML服务器控件。   
+
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<p><a href="http://blog.csdn.net/zhoufoxcn/article/details/2944967">原文地址</a></p>
+
+<h2 id="">知识点：</h2>
+
+<p>XHTML语言 <br>
+静态网页 <br>
+动态网页 <br>
+WEB服务器 <br>
+Asp.net开发的预备知识   </p>
+
+<h2 id="">内容</h2>
+
+<p>HTML表单的提交方式
+HTM控件
+获取HTML表单内容
+乱码问题
+SQL注入
+服务器端表单
+HTML服务器控件</p>
+
+<h3 id="html">HTML表单的提交方式</h3>
+
+<p>对于一个普通HTML表单来说，它有两个重要的属性：action和method。 <br>
+action属性指明当前表单提交之后由哪个程序来处理，这个处理程序可以是任何动态网页或者servlet或者CGI（Common Gateway Interface），在asp.NET里面一般都是都aspx页面来处理。 <br>
+method属性指明form表单的提交方式。它有两个可能值get和post。   </p>
+
+<p>具体说来get和post提交方式有如下两个区别： <br>
+（1）get方式提交的表单在地址栏会显示参数名和参数值，而post方式不会。用post提交参数相对来说更隐蔽一些，也相对安全一些。 <br>
+（2）由于浏览器地址栏能输入的最大字符数有限制，所以用get方式提交不能处理参数值更大的表单，而post方式则没有这个限制。   </p>
+
+<h3 id="html">HTML控件</h3>
+
+<p>HTML控件在上面的例子里已经用到，它就是指用HTML表单里的一些列元素来提供用户交互，它们都是类似&lt;input type="text" name="name"&gt;这样的标记。要呈现什么的形式由type属性来决定，可以有“text”、“password”、“radio”、“checkbox”、“submit”及“reset”等，分别呈现为文本框、密码框、单选框、复选框及提交按钮和重置按钮等。</p>
+
+<h3 id="">获取表单值</h3>
+
+<p>通过用get方式提交表单我们可以看到提交到服务器的时候，在网页后面有“?username=zhoufoxcn&amp;pwd=12345”这么一个字符串，也就是以表单里HTML控件的名字=控件值的方式，并且如果存在多个控件，彼此之间以“&amp;”分割，那么我们就可以以控件名来获取控件值。获取HTML控件值常见有以下集中方式： <br>
+<img src="https://ooo.0o0.ooo/2017/05/06/590d3b7e5241d.jpg" alt="2017-05-06_105639.jpg" title=""></p>
+
+<h3 id="">服务器端表单</h3>
+
+<p><code>
+&lt;form id="form1" runat="server"&gt; <br>
+</code>
+在服务器端表单里可以不用指定action属性，表示由当前页面处理，也可以不指定method属性，默认为post方式提交表单。在服务器端表单里，我们不光可以使用HTML控件，还可以使用HTML服务器控件，还可以使用asp.net控件。   </p>
+
+<h3 id="html">HTML服务器控件</h3>
+
+<p>HTML服务器控件与普通服务器控件不同的是：在普通HTML控件中加上了一个id属性和一个runat=”server”标记。如下就是一个HTML服务器控件： <br>
+<code>
+&lt;input type="text" runat="server" id="txtUserName" /&gt;
+</code> <br>
+HTML服务器控件有几个限制： <br>
+在整个asp.net页面中这个控件id的必须唯一，并且HTML服务器控件只能放在HTML服务器表单中。因为一个asp.net页面只能有一个服务器表单，所以说在服务器表单中控件的id值必须唯一，因为我们在编程的时候通过这个id来访问HTML服务器控件。   </p>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "2017-05-06-03";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
