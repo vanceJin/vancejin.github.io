@@ -1,0 +1,362 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+[原文地址](http://blog.csdn.net/zhoufoxcn/article/details/3134608)
+
+通过前面的例子我们看到每次我们要显示数据的时候都要通过一个循环来显示满足条件的数据，这是一个比较麻烦的过程，为此微软定义了一系列的控件专门用于显示数据的格式，通过这些控件可以以可视化的方式查看绑定数据之后的效果。这些控件称之为数据绑定控件。在asp.NET中所有的数据库绑定控件都是从BaseDataBoundControl这个抽象类派生的，这个抽象类定义了几个重要属性和一个重要方法：   
+DataSource属性：指定数据绑定控件的数据来源，显示的时候程序将会从这个数据源中获取数据并显示。   
+DataSourceID属性：指定数据绑定控件的数据源控件的ID, 显示的时候程序将会根据这个ID找到相应的数据源控件，并利用这个数据源控件中指定方法获取数据并显示。   
+DataBind()方法：当指定了数据绑定控件的DataSource属性或者DataSourceID属性之后，再调用DataBind()方法才会显示绑定的数据。并且在使用数据源时，会首先尝试使用DataSourceID属性标识的数据源，如果没有设置DataSourceID时才会用到DataSource属性标识的数据源。也就是**说DataSource和DataSourceID两个属性不能同时使用**。   
+
+今天要讲述的内容有：   
+DropDownList控件   
+ListBox控件   
+GridView控件   
+DataList控件   
+Repeater控件   
+FormView控件   
+DetailsView控件   
+
+###DropDownList控件
+DropDownList控件是一个相对比较简单的数据绑定控件，它在客户端被解释成<select></select>这样的HTML标记，也就是只能有一个选项处于选中状态。   
+DropDownList控件常见属性：   
+AutoPostBack属性：这个属性的用法在讲述基本控件的时候已经讲过，是用来设置当下拉列表项发生变化时是否主动向服务器提交整个表单，默认是false，即不主动提交。如果设置为true，就可以编写它的SelectedIndexChanged事件处理代码进行相关处理（注意：如果此属性为false即使编写了SelectedIndexChanged事件处理代码也不会马上起作用）。   
+DataTextField属性：设置列表项的可见部分的文字。   
+DataValueField属性：设置列表项的值部分。   
+Items属性：获取控件的列表项的集合。   
+SelectedIndex属性：获取或设置 DropDownList 控件中的选定项的索引。    
+SelectedItem属性：获取列表控件中索引最小的选定项。   
+SelectedValue属性：取列表控件中选定项的值，或选择列表控件中包含指定值的项。   
+因为在实际开发中，用户希望直观地看见选中哪个选项，而在操作数据库的时候我们更希望直接以该值对应的编号来操作，利用DataTextField属性和DataValueField属性就可以很方便地做到这一点，这两个属性通常是数据源中的某个字段名（如果DataSource属性是DataTable或者是DataView的话）或者范型集合中实体的属性（如果DataSource属性是System.Collections.Generic.List<T>的话，则可以指定为T的属性）。
+
+另外，DropDownList控件默认情况下是第一个选项处于选中状态，如果我们想在绑定数据之后让某个选项处于选中状态，可以利用它的Items属性，DropDownList控件的Items属性其实是一个ListItemCollection的实例，ListItemCollection类有两个重要方法：   
+public ListItem FindByText (string text)：在选项集合中查找指定文字的选项。   
+public ListItem FindByValue (string value) ：在选项集合中查找指定值的选项。    
+利用这个属性，我们可以让某个选项在数据绑定后就处于选中状态。   
+
+###ListBox控件
+ListBox控件和DropDownList控件非常类似，ListBox控件是也是提供一组选项供用户选择的，只不过DropDownList控件只能有一个选项处于选中状态，并且每次只能显示一行（一个选项），而ListBox控件可以设置为允许多选，并且还可以设置为显示多行。
+
+除了与DropDownList具有很多相似的属性之外，ListBox控件还有以下属性：   
+Rows属性：设置ListBox控件显示的行数。   
+SelectionMode属性：设置ListBox的选择模式，这是一个枚举值，它有Multiple和Single两个值，分别代表多选和单选，默认是Single，即同时只能有一个选项处于选中状态。如果要想实现多选，除了设置SelectionMode属性为Multiple外，在选择时需要按住Ctrl键。   
+需要说明的是，因为ListBox允许多选，所以如果ListBox的SelectionMode属性为Multiple，那么SelectedIndex属性指的是被选中的选项中索引最小的那一个，SelectedValue属性指的是被选中的选项集合中索引最小的那一个的值。      
+
+GridView控件   
+GridView控件作为asp.net1.1下的DataGrid的替代品，它内置了表格呈现样式。  
+GridView 控件用来在表中显示数据源的值。每列表示一个字段，而每行表示一条记录。GridView 控件支持下面的功能：   
+绑定至数据源控件，如 SqlDataSource。   
+内置排序功能。   
+内置更新和删除功能。   
+内置分页功能。   
+内置行选择功能。   
+以编程方式访问 GridView 对象模型以动态设置属性、处理事件等。   
+多个键字段。   
+用于超链接列的多个数据字段。   
+可通过主题和样式进行自定义的外观。   
+可以实现多种样式的数据展示。   
+GridView控件主要有以下常见属性：   
+AllowPaging属性：设置是否启用分页功能。   
+AllowSorting 属性：设置是否启用排序功能。   
+AutoGenerateColumns 属性：设置是否为数据源中的每个字段自动创建绑定字段。 
+这个属性默认为true，但在实际开发中很少会自动创建绑定列，我们总会根据一些情况让一些列不显示，比如显示用户列表的时候不会将用户密码显示出来，显示文章列表的时候不会将文章内容显示出来。   
+Columns属性：获取 GridView 控件中列字段的集合。   
+PageCount属性：获取在 GridView 控件中显示数据源记录所需的页数。   
+PageIndex属性：获取或设置当前显示页的索引。   
+PagerSetting属性：设置GridView的分页样式。   
+PageSize属性：设置GridView控件每次显示的最大记录条数。   
+
+显示7中类型的字段，它们分别是：   
+BoundField:绑定字段，以文本的方式显示数据。   
+CheckBoxField:复选框字段，如果数据库是bit字段，则以此方式显示。   
+HyperLinkField:用超级连接的形式的显示字段值。   
+ImageField:用于显示存放Image图象的url字段数据，显示成图片效果。  
+ButtonField：显示按钮列。   
+CommandField：显示可执行操作的列，可以执行编辑或者删除等操作。可以设置它的ButtonType属性来决定显示成普通按钮、图片按钮或者超级链接。   
+TemplateField:自定义数据的显示方式，在这里我们可以使用我们所熟悉的HTML控件或者asp.Net Web服务器控件。   
+
+GridView控件的字段大都有HeaderText这个属性，这个属性是用来设置数据的镖头的，如果我们不设置的话默认都是以数据库的相应字段作为表头。另外还有一个DataField属性，这个属性是用来设置要绑定显示的数据的属性或者列名。
+
+在这里还需要介绍一个属性：DataNavigateUrlFormatString，类似的还有DataTextFormatString，有时候在显示数据的时候我们并不希望仅仅将数据简简单单显示，还希望用一定的格式来显示，那么就可以设置这个属性，在显示的时候我们用到了一个HyperLinkField，用来显示一个超级链接。
+
+在GridView控件中TemplateField字段中可以定义5中不同类型的模版，分别如下：
+AlternatingItemTemplate：交替项模版，即偶数项中显示的内容，可以进行数据绑定。   
+EditItemTemplate：编辑项模版，当当前这条数据处于编辑状态的时候要显示的内容，可以进行数据绑定。   
+FooterTemplate：脚模版，即脚注部分要显示的内容，不可以进行数据绑定。   
+HeaderTemplate：头模版，即表头部分要显示的内容，不可以进行数据绑定。   
+ItemTemplate：项模版，处于普通项中要显示的内容，如果指定了AlternatingItemTemplate中的内容，则这里的设置是奇数项的显示效果。可以进行数据绑定。   
+注意：可以不设置AlternatingItemTemplate，如果没有设置AlternatingItemTemplate，那么所有的数据项在非编辑模式下都按照ItemTemplate中的设置显示。   
+
+对于GridView的用法笔者要说明几点：
+1、上面的代码采用了默认的自定义分页，这种分页每次翻页的时候都会将所有的数据全部从数据中取出来，根据当前页索引和每页要显示的记录条数决定要显示哪些记录，其它的数据会被丢弃掉，在数据量比较大的时候会导致性能低下。对于表中有大量数据的情况，需要自已写分页方法，每次只从数据库中取出需要显示的数据，提高网站的性能，并且根据当前页索引显示页面跳转导航链接。   
+2、当DataSource中没有任何记录时，GridView默认是没有任何显示的。我们还可以给GridView添加一种效果，即当GridView中没有任何数据时给用户提示。   
+
+GridView中实现反选和全选功能
+在显示数据的时候经常有一些批量操作的功能，比如数据的批量删除等，我们可以利用JavaScript脚本来辅助实现这一功能，不过如果用asp.net中的CheckBox控件来实现这个功能的话，比较麻烦，因为在GridView这样的控件将asp.net中的Web服务器控件转换成普通HTML控件的时候不能直接按照控件的ID来分配，存在着在一个GridView中有多个CheckBox控件，为了防止命名冲突，asp.net 为页上的各个服务器控件自动生成一个唯一的 ClientID 值。ClientID 值是通过连接控件的 ID 值和它的父控件的 UniqueID 值生成的。如果未指定控件的 ID 值，则使用自动生成的值。如果我们在GridView中添加一个CheckBox控件，我们在生成的HTML控件中会发现它生成的HTML代码类似于下面的格式：  
+ 
+javascript操作GridView这样的控件中的asp.net Web服务器控件一定要注意这个情况，可以通过asp.net Web服务器控件的ClientID属性来操作。   
+
+###DataList控件
+DataList是一个相对复杂一点的数据绑定控件，它需要使用者自己定义数据的展现格式，也就是需要在html层控制数据的展示格式。和GridView控件每行只能显示一条记录不同，DataList可以在一行显示多条记录。   
+DataList支持以下模版：AlternatingItemTemplate、EditItemTemplate、FooterTemplate、HeaderTemplate、ItemTemplate和SelectedItemTemplate及SeparatorTemplate。其中AlternatingItemTemplate、EditItemTemplate、FooterTemplate和HeaderTemplate及ItemTemplate在TemplateField的支持的模版类型时已经介绍了，SelectedItemTemplatem模版是当该项处于选中状态的效果，SeparatorTemplate是各项之间分隔显示效果。   
+DataList有两个重要属性，如下：   
+RepeatColumns：DataList中要显示的列数。默认是0，即按照RepeatDirection的设置单行或者单列显示数据。   
+RepeatDirection：DataList的显示方式，这个属性是一个枚举值，有Horizontal和Vertical两个值，分别代表水平和垂直显示。   
+在使用DataList时经常会嵌套绑定，所谓嵌套就是在一个数据绑定控件中嵌套着另一个数据绑定控件。   
+
+###Repeater控件
+Repeater控件的用法类似于DataList控件，只不过它不能在一行显示多行数据，不过它可以让我们更灵活地控制数据的显示样式。如果Repeater控件中没有定义模版或者模版中没有定义要显示的数据的显示方式，那么在运行时该控件在页面上不会有任何显示。   
+Repeater服务器控件支持的模版有ItemTemplate、AlternatingItemTemplate、HeaderTemplate和FooterTemplate及SeparatorTemplate，这些模版的用法类似于DataList中对应的模版的用法。   
+
+前面讲到的GridView和DataList及Repeater控件是用来批量显示数据的，在这种情况下只显示数据库记录的概要信息。   
+
+###FormView控件
+Form控件的用法和Repeater控件的用法非常类似，它支持模版类型有EditItemTemplate、EmptyDataTemplate、FooterTemplate、HeaderTemplate、ItemTemplate和InsertItemTemplate、PagerTemplate，注意这里没有AlternatingItemTemplate模版（就一条记录自然就不会有什么奇偶行效果了）。
+FormView 控件支持以下功能：   
+绑定到数据源控件，如 SqlDataSource 和 ObjectDataSource。   
+内置插入功能。   
+内置更新和删除功能。   
+内置分页功能。   
+以编程方式访问 FormView 对象模型以动态设置属性、处理事件等。   
+可通过用户定义的模板、主题和样式自定义外观。   
+需要特别说明的是笔者只是说FormView 控件一次只能显示一条数据，但是如果绑定的数据源有多条记录的时候，默认是显示第一条记录，但是还能支持像GridView那样分页显示数据源中的每条记录。   
+
+###DetailsView控件
+DetailsView控件主要是以表格的形式来显示和处理来自数据源的单条数据。它支持绑定功能(即可以使用DataBind()方法)和分页及编辑等功能，它一般与GridView控件搭配使用，用GridView控件显示数据记录列表，用DetailsView显示某条记录的详细信息。DetailsView控件的用法也很类似于GridView控件。
+
+##总结：
+GridView、DataList和Repeater控件适合一次性显示多条数据概要的情况下，它们对呈现数据的控制能力是GridView较弱，DataList次之，Repeater因为使用者完全可以自己编写呈现的HTML代码来控制呈现方式所以对数据呈现方式方面控制最强，在使用便捷性上来说GridView因为内置了表格呈现样式并且了内置了分页和排序等方面的功能所以较容易操作，DataList次之，Repeater因为使用者完全自己编写呈现的HTML代码所以较难使用。如果仅仅呈现一下数据，可以考虑使用GridView控件，如果需要将数据分成多列显示只能使用DataList控件，如果想使用复杂的呈现方式则可以考虑使用Repeater控件。    
+FormView与DetailsView控件有很多相似的地方，二者都是用来显示某一详细记录，都是只能显示一条数据源中的记录。并且都具有分页的能力。并且都支持显示、编辑和添加等功能。但是二者也有不同点：具体表现在DetailsView内置了表格呈现样式，并且显示相关数据的字段名称和数据值。FormView则需要自己写相关的HTML代码。另外，DetailsView有AutoGenerateField属性或者自定义Fileds属性，控件能够自动创建相关模版属性，而FormView控件的呈现形式完全依赖模版设置。另外一般来说DetailsView控件将数据源中的每一个字段用一行来显示，而FormView控件将数据源中每一条记录用一行来显示。   
+
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<p><a href="http://blog.csdn.net/zhoufoxcn/article/details/3134608">原文地址</a></p>
+
+<p>通过前面的例子我们看到每次我们要显示数据的时候都要通过一个循环来显示满足条件的数据，这是一个比较麻烦的过程，为此微软定义了一系列的控件专门用于显示数据的格式，通过这些控件可以以可视化的方式查看绑定数据之后的效果。这些控件称之为数据绑定控件。在asp.NET中所有的数据库绑定控件都是从BaseDataBoundControl这个抽象类派生的，这个抽象类定义了几个重要属性和一个重要方法： <br>
+DataSource属性：指定数据绑定控件的数据来源，显示的时候程序将会从这个数据源中获取数据并显示。 <br>
+DataSourceID属性：指定数据绑定控件的数据源控件的ID, 显示的时候程序将会根据这个ID找到相应的数据源控件，并利用这个数据源控件中指定方法获取数据并显示。 <br>
+DataBind()方法：当指定了数据绑定控件的DataSource属性或者DataSourceID属性之后，再调用DataBind()方法才会显示绑定的数据。并且在使用数据源时，会首先尝试使用DataSourceID属性标识的数据源，如果没有设置DataSourceID时才会用到DataSource属性标识的数据源。也就是<strong>说DataSource和DataSourceID两个属性不能同时使用</strong>。   </p>
+
+<p>今天要讲述的内容有： <br>
+DropDownList控件 <br>
+ListBox控件 <br>
+GridView控件 <br>
+DataList控件 <br>
+Repeater控件 <br>
+FormView控件 <br>
+DetailsView控件   </p>
+
+<h3 id="dropdownlist">DropDownList控件</h3>
+
+<p>DropDownList控件是一个相对比较简单的数据绑定控件，它在客户端被解释成<select></select>这样的HTML标记，也就是只能有一个选项处于选中状态。 <br>
+DropDownList控件常见属性： <br>
+AutoPostBack属性：这个属性的用法在讲述基本控件的时候已经讲过，是用来设置当下拉列表项发生变化时是否主动向服务器提交整个表单，默认是false，即不主动提交。如果设置为true，就可以编写它的SelectedIndexChanged事件处理代码进行相关处理（注意：如果此属性为false即使编写了SelectedIndexChanged事件处理代码也不会马上起作用）。 <br>
+DataTextField属性：设置列表项的可见部分的文字。 <br>
+DataValueField属性：设置列表项的值部分。 <br>
+Items属性：获取控件的列表项的集合。 <br>
+SelectedIndex属性：获取或设置 DropDownList 控件中的选定项的索引。 <br>
+SelectedItem属性：获取列表控件中索引最小的选定项。 <br>
+SelectedValue属性：取列表控件中选定项的值，或选择列表控件中包含指定值的项。 <br>
+因为在实际开发中，用户希望直观地看见选中哪个选项，而在操作数据库的时候我们更希望直接以该值对应的编号来操作，利用DataTextField属性和DataValueField属性就可以很方便地做到这一点，这两个属性通常是数据源中的某个字段名（如果DataSource属性是DataTable或者是DataView的话）或者范型集合中实体的属性（如果DataSource属性是System.Collections.Generic.List<t>的话，则可以指定为T的属性）。</t></p>
+
+<p>另外，DropDownList控件默认情况下是第一个选项处于选中状态，如果我们想在绑定数据之后让某个选项处于选中状态，可以利用它的Items属性，DropDownList控件的Items属性其实是一个ListItemCollection的实例，ListItemCollection类有两个重要方法： <br>
+public ListItem FindByText (string text)：在选项集合中查找指定文字的选项。 <br>
+public ListItem FindByValue (string value) ：在选项集合中查找指定值的选项。 <br>
+利用这个属性，我们可以让某个选项在数据绑定后就处于选中状态。   </p>
+
+<h3 id="listbox">ListBox控件</h3>
+
+<p>ListBox控件和DropDownList控件非常类似，ListBox控件是也是提供一组选项供用户选择的，只不过DropDownList控件只能有一个选项处于选中状态，并且每次只能显示一行（一个选项），而ListBox控件可以设置为允许多选，并且还可以设置为显示多行。</p>
+
+<p>除了与DropDownList具有很多相似的属性之外，ListBox控件还有以下属性： <br>
+Rows属性：设置ListBox控件显示的行数。 <br>
+SelectionMode属性：设置ListBox的选择模式，这是一个枚举值，它有Multiple和Single两个值，分别代表多选和单选，默认是Single，即同时只能有一个选项处于选中状态。如果要想实现多选，除了设置SelectionMode属性为Multiple外，在选择时需要按住Ctrl键。 <br>
+需要说明的是，因为ListBox允许多选，所以如果ListBox的SelectionMode属性为Multiple，那么SelectedIndex属性指的是被选中的选项中索引最小的那一个，SelectedValue属性指的是被选中的选项集合中索引最小的那一个的值。      </p>
+
+<p>GridView控件 <br>
+GridView控件作为asp.net1.1下的DataGrid的替代品，它内置了表格呈现样式。 <br>
+GridView 控件用来在表中显示数据源的值。每列表示一个字段，而每行表示一条记录。GridView 控件支持下面的功能： <br>
+绑定至数据源控件，如 SqlDataSource。 <br>
+内置排序功能。 <br>
+内置更新和删除功能。 <br>
+内置分页功能。 <br>
+内置行选择功能。 <br>
+以编程方式访问 GridView 对象模型以动态设置属性、处理事件等。 <br>
+多个键字段。 <br>
+用于超链接列的多个数据字段。 <br>
+可通过主题和样式进行自定义的外观。 <br>
+可以实现多种样式的数据展示。 <br>
+GridView控件主要有以下常见属性： <br>
+AllowPaging属性：设置是否启用分页功能。 <br>
+AllowSorting 属性：设置是否启用排序功能。 <br>
+AutoGenerateColumns 属性：设置是否为数据源中的每个字段自动创建绑定字段。 
+这个属性默认为true，但在实际开发中很少会自动创建绑定列，我们总会根据一些情况让一些列不显示，比如显示用户列表的时候不会将用户密码显示出来，显示文章列表的时候不会将文章内容显示出来。 <br>
+Columns属性：获取 GridView 控件中列字段的集合。 <br>
+PageCount属性：获取在 GridView 控件中显示数据源记录所需的页数。 <br>
+PageIndex属性：获取或设置当前显示页的索引。 <br>
+PagerSetting属性：设置GridView的分页样式。 <br>
+PageSize属性：设置GridView控件每次显示的最大记录条数。   </p>
+
+<p>显示7中类型的字段，它们分别是： <br>
+BoundField:绑定字段，以文本的方式显示数据。 <br>
+CheckBoxField:复选框字段，如果数据库是bit字段，则以此方式显示。 <br>
+HyperLinkField:用超级连接的形式的显示字段值。 <br>
+ImageField:用于显示存放Image图象的url字段数据，显示成图片效果。 <br>
+ButtonField：显示按钮列。 <br>
+CommandField：显示可执行操作的列，可以执行编辑或者删除等操作。可以设置它的ButtonType属性来决定显示成普通按钮、图片按钮或者超级链接。 <br>
+TemplateField:自定义数据的显示方式，在这里我们可以使用我们所熟悉的HTML控件或者asp.Net Web服务器控件。   </p>
+
+<p>GridView控件的字段大都有HeaderText这个属性，这个属性是用来设置数据的镖头的，如果我们不设置的话默认都是以数据库的相应字段作为表头。另外还有一个DataField属性，这个属性是用来设置要绑定显示的数据的属性或者列名。</p>
+
+<p>在这里还需要介绍一个属性：DataNavigateUrlFormatString，类似的还有DataTextFormatString，有时候在显示数据的时候我们并不希望仅仅将数据简简单单显示，还希望用一定的格式来显示，那么就可以设置这个属性，在显示的时候我们用到了一个HyperLinkField，用来显示一个超级链接。</p>
+
+<p>在GridView控件中TemplateField字段中可以定义5中不同类型的模版，分别如下：
+AlternatingItemTemplate：交替项模版，即偶数项中显示的内容，可以进行数据绑定。 <br>
+EditItemTemplate：编辑项模版，当当前这条数据处于编辑状态的时候要显示的内容，可以进行数据绑定。 <br>
+FooterTemplate：脚模版，即脚注部分要显示的内容，不可以进行数据绑定。 <br>
+HeaderTemplate：头模版，即表头部分要显示的内容，不可以进行数据绑定。 <br>
+ItemTemplate：项模版，处于普通项中要显示的内容，如果指定了AlternatingItemTemplate中的内容，则这里的设置是奇数项的显示效果。可以进行数据绑定。 <br>
+注意：可以不设置AlternatingItemTemplate，如果没有设置AlternatingItemTemplate，那么所有的数据项在非编辑模式下都按照ItemTemplate中的设置显示。   </p>
+
+<p>对于GridView的用法笔者要说明几点：
+1、上面的代码采用了默认的自定义分页，这种分页每次翻页的时候都会将所有的数据全部从数据中取出来，根据当前页索引和每页要显示的记录条数决定要显示哪些记录，其它的数据会被丢弃掉，在数据量比较大的时候会导致性能低下。对于表中有大量数据的情况，需要自已写分页方法，每次只从数据库中取出需要显示的数据，提高网站的性能，并且根据当前页索引显示页面跳转导航链接。 <br>
+2、当DataSource中没有任何记录时，GridView默认是没有任何显示的。我们还可以给GridView添加一种效果，即当GridView中没有任何数据时给用户提示。   </p>
+
+<p>GridView中实现反选和全选功能
+在显示数据的时候经常有一些批量操作的功能，比如数据的批量删除等，我们可以利用JavaScript脚本来辅助实现这一功能，不过如果用asp.net中的CheckBox控件来实现这个功能的话，比较麻烦，因为在GridView这样的控件将asp.net中的Web服务器控件转换成普通HTML控件的时候不能直接按照控件的ID来分配，存在着在一个GridView中有多个CheckBox控件，为了防止命名冲突，asp.net 为页上的各个服务器控件自动生成一个唯一的 ClientID 值。ClientID 值是通过连接控件的 ID 值和它的父控件的 UniqueID 值生成的。如果未指定控件的 ID 值，则使用自动生成的值。如果我们在GridView中添加一个CheckBox控件，我们在生成的HTML控件中会发现它生成的HTML代码类似于下面的格式：  </p>
+
+<p>javascript操作GridView这样的控件中的asp.net Web服务器控件一定要注意这个情况，可以通过asp.net Web服务器控件的ClientID属性来操作。   </p>
+
+<h3 id="datalist">DataList控件</h3>
+
+<p>DataList是一个相对复杂一点的数据绑定控件，它需要使用者自己定义数据的展现格式，也就是需要在html层控制数据的展示格式。和GridView控件每行只能显示一条记录不同，DataList可以在一行显示多条记录。 <br>
+DataList支持以下模版：AlternatingItemTemplate、EditItemTemplate、FooterTemplate、HeaderTemplate、ItemTemplate和SelectedItemTemplate及SeparatorTemplate。其中AlternatingItemTemplate、EditItemTemplate、FooterTemplate和HeaderTemplate及ItemTemplate在TemplateField的支持的模版类型时已经介绍了，SelectedItemTemplatem模版是当该项处于选中状态的效果，SeparatorTemplate是各项之间分隔显示效果。 <br>
+DataList有两个重要属性，如下： <br>
+RepeatColumns：DataList中要显示的列数。默认是0，即按照RepeatDirection的设置单行或者单列显示数据。 <br>
+RepeatDirection：DataList的显示方式，这个属性是一个枚举值，有Horizontal和Vertical两个值，分别代表水平和垂直显示。 <br>
+在使用DataList时经常会嵌套绑定，所谓嵌套就是在一个数据绑定控件中嵌套着另一个数据绑定控件。   </p>
+
+<h3 id="repeater">Repeater控件</h3>
+
+<p>Repeater控件的用法类似于DataList控件，只不过它不能在一行显示多行数据，不过它可以让我们更灵活地控制数据的显示样式。如果Repeater控件中没有定义模版或者模版中没有定义要显示的数据的显示方式，那么在运行时该控件在页面上不会有任何显示。 <br>
+Repeater服务器控件支持的模版有ItemTemplate、AlternatingItemTemplate、HeaderTemplate和FooterTemplate及SeparatorTemplate，这些模版的用法类似于DataList中对应的模版的用法。   </p>
+
+<p>前面讲到的GridView和DataList及Repeater控件是用来批量显示数据的，在这种情况下只显示数据库记录的概要信息。   </p>
+
+<h3 id="formview">FormView控件</h3>
+
+<p>Form控件的用法和Repeater控件的用法非常类似，它支持模版类型有EditItemTemplate、EmptyDataTemplate、FooterTemplate、HeaderTemplate、ItemTemplate和InsertItemTemplate、PagerTemplate，注意这里没有AlternatingItemTemplate模版（就一条记录自然就不会有什么奇偶行效果了）。
+FormView 控件支持以下功能： <br>
+绑定到数据源控件，如 SqlDataSource 和 ObjectDataSource。 <br>
+内置插入功能。 <br>
+内置更新和删除功能。 <br>
+内置分页功能。 <br>
+以编程方式访问 FormView 对象模型以动态设置属性、处理事件等。 <br>
+可通过用户定义的模板、主题和样式自定义外观。 <br>
+需要特别说明的是笔者只是说FormView 控件一次只能显示一条数据，但是如果绑定的数据源有多条记录的时候，默认是显示第一条记录，但是还能支持像GridView那样分页显示数据源中的每条记录。   </p>
+
+<h3 id="detailsview">DetailsView控件</h3>
+
+<p>DetailsView控件主要是以表格的形式来显示和处理来自数据源的单条数据。它支持绑定功能(即可以使用DataBind()方法)和分页及编辑等功能，它一般与GridView控件搭配使用，用GridView控件显示数据记录列表，用DetailsView显示某条记录的详细信息。DetailsView控件的用法也很类似于GridView控件。</p>
+
+<h2 id="">总结：</h2>
+
+<p>GridView、DataList和Repeater控件适合一次性显示多条数据概要的情况下，它们对呈现数据的控制能力是GridView较弱，DataList次之，Repeater因为使用者完全可以自己编写呈现的HTML代码来控制呈现方式所以对数据呈现方式方面控制最强，在使用便捷性上来说GridView因为内置了表格呈现样式并且了内置了分页和排序等方面的功能所以较容易操作，DataList次之，Repeater因为使用者完全自己编写呈现的HTML代码所以较难使用。如果仅仅呈现一下数据，可以考虑使用GridView控件，如果需要将数据分成多列显示只能使用DataList控件，如果想使用复杂的呈现方式则可以考虑使用Repeater控件。 <br>
+FormView与DetailsView控件有很多相似的地方，二者都是用来显示某一详细记录，都是只能显示一条数据源中的记录。并且都具有分页的能力。并且都支持显示、编辑和添加等功能。但是二者也有不同点：具体表现在DetailsView内置了表格呈现样式，并且显示相关数据的字段名称和数据值。FormView则需要自己写相关的HTML代码。另外，DetailsView有AutoGenerateField属性或者自定义Fileds属性，控件能够自动创建相关模版属性，而FormView控件的呈现形式完全依赖模版设置。另外一般来说DetailsView控件将数据源中的每一个字段用一行来显示，而FormView控件将数据源中每一条记录用一行来显示。   </p>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "2017050608.html";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
