@@ -1,0 +1,284 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+[原文地址](http://blog.csdn.net/zhoufoxcn/article/details/3066799)
+
+ADO.NET是对Microsoft ActiveX Data Objects (ADO)一个跨时代的改进，它提供了平台互用性和可伸缩的数据访问。由于传送的数据都是XML格式的，因此任何能够读取XML格式的应用程序都可以进行数据处理。事实上，接受数据的组件不一定要是ADO .NET组件，它可以是基于一个Microsoft Visual Studio的解决方案，也可以是任何运行在其它平台上的任何应用程序。   
+以前做数据库访问的时候，需要一直与数据库保持连接，直到获取完所有满足需要的数据之后才会断开数据库连接，这种数据库访问方式称之为连接式数据访问技术。相比于以前的连接式数据访问技术，ADO.NET除了提供连接式数据访问技术之外，还提供了另一种断开式解决方案，那就是在内存中模拟一个数据库，也就是内存中的数据库。   
+我们知道在实际的数据库技术中，每个数据库就是一个业务逻辑单元，一般来说这个数据库包含了实现一个应用软件或者一个网站所需要的全部数据。在这里数据库就是顶级对象，我们引用创建数据库时所用到的名词database来表示（因为创建数据库的SQL语句是create database），在一个数据库里可以包含有多个表(table)和视图(view)，除此之外还可以包含有一些外键关系等。在一个表(table)或者视图(view)里可以包含多个列(column)和行(row)。   
+在ADO.NET中对上面提到的对象都在内存中进行了模拟，在内存中的数据库对象称之为DataSet，一个内存中的数据库(DataSet)可以包含多个在内存中的表(DataTable)和内存中的视图(DataView)，并且也允许在表存在一些关系(DataRelation)。同时在一个内存中的表(DataTable)或者内存中的视图(DataView)中也允许存在行(DataRow)和列(DataColumn)。   
+物理数据库与内存数据库之间的各对象的对应关系如下：   
+![2017-05-06_200232.jpg](https://ooo.0o0.ooo/2017/05/06/590dbb77ad73a.jpg)
+在上图中颜色相同的表示二者基本上是一种对应关系。
+ 
+在本篇将讲述6个ADO.NET中的常用对象：
+Connection对象   
+Command对象   
+DataReader对象   
+DataAdapter对象   
+DataSet对象   
+DataTable对象   
+DataRow对象   
+DataColumn对象   
+参数化SQL语句   
+分页查询SQL语句   
+
+严格地说，在.net类库中并没有Connection、Command、DataAdapter和DataReader对象的，这是对相关的对象做了一个抽象。在实际的开发中，我们经常用到的数据库有Access、SQL Server、Oracle、MySQL等，尽管大部分都遵循SQL国际化标准，但是它们在遵循标准的前提下又做了一些扩充，并且即使遵循了相同的标准，但是实现方法并不相同，所以在某些情况下实现相同的功能可能在不同的数据库中SQL语句并不相同。   
+于是，在ADO.NET也定义了一套用于访问数据库的标准，当然这个标准是以接口(interface)的形式提供的，各数据库厂商只要实现了这个接口就能在ADO.NET下正常工作（这也是接口的作用，接口就是用于指定规范，自己本身并不实现，在Java中针对数据库访问也有一套接口留待各数据库来实现）。当然在.net类库中微软已经提供对Access、SQL Server和Oracle数据库对上面提到的接口的实现。   
+在ADO.NET中定义的这一套接口是IDbConnection、IDbCommand、IDbDataAdapter和IDataReader，并且还有一套实现这些接口的抽象类，分别是DbConnection、DbCommand、DbDataAdapter和DataReader。   
+![2017-05-06_201215.jpg](https://ooo.0o0.ooo/2017/05/06/590dbe33cce82.jpg)
+![2017-05-06_201531.jpg](https://ooo.0o0.ooo/2017/05/06/590dbe7baf57c.jpg)
+
+上图最上面的是数据库访问接口，紧接着的是数据库访问抽象类，下面是针对不同数据库中实现这些接口的类，并且在括号中注明了其所在的命名空间，比如针对MySQL数据的数据库访问类就位于MySql.Data.MySqlClient命名空间下，关于MySql的数据库访问类需要到MySql数据库的官方网站去下载，它的官方网站是http://www.mysql.com。其它的数据库访问类都在.net类库中自带了。   
+注意：访问SQL Server7.0以下版本的SQL Server数据库时需要用 
+System.Data.OleDb命名空间下一套数据库访问类，虽然这一套数据库访问类同样也能访问SQL Server2000以上版本，但是没有办法利用SQL Server数据库的一些新特性，所以不建议使用System.Data.OleDb命名空间下的类访问SQL Server2000以上的版本。   
+在本篇的讲述中，针对SQL Server数据库讲述Connection、Command、DataAdapter和DataReader对象的用法，它们在其它数据库中也有对应的类，除了有些SQL语句语法不一样之外，用法是基本一样的。   
+
+###Connection对象
+Connection对象也称为数据库连接对象，Connection对象的功能是负责对数据源的连接。所有Connection对象的基类都是DbConnection类。   
+Connection对象有两个重要属性：   
+ConnectionString：表示用于打开 SQL Server 数据库的字符串；   
+State：表示 Connection 的状态，有Closed和Open两种状态。   
+Connection对象有两个重要方法：   
+Open()方法：指示打开数据库；   
+Close()方法：指示关闭数据库。   
+
+###Command对象
+Command对象也称为数据库命令对象，Command对象主要执行包括添加、删除、修改及查询数据的操作的命令。也可以用来执行存储过程。用于执行存储过程时需要将Command对象的CommandType 属性设置为CommandType.StoredProcedure，默认情况下CommandType 属性为CommandType.Text，表示执行的是普通SQL语句。   
+Command主要有三个方法：   
+ExecuteNonQuery () ：执行一个SQL语句，返回受影响的行数，这个方法主要用于执行对数据库执行增加、更新、删除操作，注意查询的时候不是调用这个方法。   
+ExecuteReader ()：执行一个查询的SQL语句，返回一个DataReader对象。   
+ExecuteScalar ()：从数据库检索单个值。这个方法主要用于统计操作。   
+
+在操作数据库的时候，为了提高性能，都遵循一个原则：数据库连接对象应该尽可能晚打开，尽可能早关闭。在上面的例子中，在Command对象需要执行数据库操作之前才打开数据库连接对象，执行数据库操作之后马上就关闭了数据库连接对象。希望初学者们记住这个原则。   
+
+###DataReader对象
+DataReader对象是一个读取行的只读流的方式，绑定数据时比使用数据集方式性能要高，因为它是只读的，所以如果要对数据库中的数据进行修改就需要借助其它方法将所作的更改保存到数据库。   
+DataReader对象不能通过直接实例化，必须借助与相关的Command对象来创建实例，例如用SqlCommand的实例的ExecuteReader()方法可以创建SqlDataReader实例。   
+因为DataReader对象读取数据时需要与数据库保持连接，所以在使用完DataReader对象读取完数据之后应该立即调用它的Close()方法关闭，并且还应该关闭与之相关的Connection对象。在.net类库中提供了一种方法，在关闭DataReader对象的同时自动关闭掉与之相关的Connection对象，使用这种方法是可以为ExecuteReader()方法指定一个参数。
+并且DataReader对象读取数据有三种方式：   
+一种是按查询的时候列的索引用指定的方式来读取列值，无需做相应转换，如GetByte（int i）就是读取第i列的值并且转换成byte类型的值。第这种方法的优点是指定列后直接将该列的直接读取出来了，无需再转换，缺点是一旦指定的列不能按照指定的方式转换时就会抛出异常，比如数据库里字段的类型是string类型或者该字段的值为空时按照GetByte(i)这种方式读取会抛出异常。   
+第二种方式就是按照列索引的方式读取，在读取的时候并不进行值转换，如：reader[5]就是读取第5列的值（这里reader是一个Reader对象的实例），这样得到的值是一个object类型的值，这也很好理解，因为在数据库可能存储各种类型的值，而object是所有类的基类，所以这个方法不会抛出异常。如果要得到它的正确类型，还需要根据数据库里的字段进行进行相应转换。   
+最后一种是按照列名的方式去读，并且在读的时候也不进行相应转换，得到的是object类型的值。   
+综合前面三种方式各有特点，第一种方式最直接，但是有可能抛出异常，第二种方式比第一种稍微灵活一些，我们可以根据读取到值为空（在.net里用DBNull类来表示，可以表示数据库中任意数据类型的空值），我们就不进行相应的类型转换，避免出现异常。第三种方式按照列的名字来读取数据，也需要按照第二种方式进行一定的转换。就性能来说第一种最高，第二种稍低，第三种最低（这很好理解，假设要在一个旅馆里找人直通过房间号找肯定比通过名字找快），就灵活性来说第三种最灵活，第二种次之，第一种最不灵活（假如在后来编写SQL语句中更改了列的索引，第一种和第二种都可能出现问题）。实际开发中根据实际情况选择合适的方式。
+
+###DataAdapter对象
+DataAdapter对象也称之为数据适配器对象，DataAdapter对象利用数据库连接对象(Connection)连接的数据源，使用数据库命令对象(Command)规定的操作从数据源中检索出数据送往数据集对象(DataSet)，或者将数据集中经过编辑后的数据送回数据源。   
+数据适配器将数据填入数据集时调用方法Fill()。
+
+当dataAdapter1调用Fill() 方法时将使用与之相关联的命令组件所指定的 SELECT 语句从数据源中检索行。然后将行中的数据添加到 DataSet 中的DataTable 对象中或者直接填充到DataTable的实例中，如果 DataTable 对象不存在，则自动创建该对象。   
+当执行上述SELECT语句时，与数据库的连接必须有效，但不需要用语句将连接对象打开。如果调用Fill()方法之前与数据库的连接已经关闭，则将自动打开它以检索数据，执行完毕后再自动将其关闭。如果调用Fill()方法之前连接对象已经打开，则检索后继续保持打开状态。    
+**注意：一个数据集中可以放置多张数据表。但是每个数据适配器只能够对应于一张数据表。***
+
+###DataSet对象
+DataSet对象也称为数据集对象，DataSet对象用于表示那些储存在内存中的数据，它相当于一个内存中的数据库。它可以包括多个DataTable对象及DataView对象。DataSet主要用于管理存储在内存中的数据以及对数据的断开操作。   
+由于DataSet对象提供了一个离线的数据源，这样减轻了数据库以及网络的负担，在设计程序的时候可以将DataSet对象作为程序的数据源。   
+
+###DataTable对象
+DataTable 是 ADO.NET 库中的核心对象，就像普通的数据库中的表一样，它也有行和列。它主要包括DataRow和DataColumn，分别代表行和列。   
+(1) 数据行(DataRow)   
+数据行是给定数据表中的一行数据，或者说是数据表中的一条记录。它可能代表一个学生、一位用户、一张订单或者一件货物的相关数据。DataRow对象的方法提供了对表中数据的插入、删除、更新和查看等功能。   
+(2) 数据列(DataColumn)   
+数据表中的数据列(又称字段)定义了表的数据结构，例如，可以用它确定列中的数据类型和大小，还可以对其他属性进行设置。例如，确定列中的数据是否是只读的、是否是主键、是否允许空值等；还可以让列在一个初始值的基础上自动增殖，增值的步长还可以自行定义。   
+某列的值需要在数据行的基础上进行。   
+ 
+###参数化SQL语句
+避免SQL注入的方法有两种：一是所有的SQL语句都存放在存储过程中，这样不但可以避免SQL注入，还能提高一些性能，并且存储过程可以由专门的数据库管理员(DBA)编写和集中管理（这种做法我在一些公司见过），不过这种做法有时候针对相同的几个表有不同条件的查询，SQL语句可能不同，这样就会编写大量的存储过程，所以有人提出了第二种方案：参数化SQL语句。
+
+###分页查询SQL语句
+在实际中我们经常遇到表里的记录数非常庞大（数万至数百万），而一次只显示几十条数据的情况，如果我们直接用下面的SQL语句查询并填充到DataTable的话，将是一个非常恐怖的事情。   
+分页查询就是根据需要每次只返回所需要的数据，而不用每次都从数据库中全部把数据提取出来，这样可以降低程序与数据库之间的数据传送量，并且还可以提高程序的性能。
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<p><a href="http://blog.csdn.net/zhoufoxcn/article/details/3066799">原文地址</a></p>
+
+<p>ADO.NET是对Microsoft ActiveX Data Objects (ADO)一个跨时代的改进，它提供了平台互用性和可伸缩的数据访问。由于传送的数据都是XML格式的，因此任何能够读取XML格式的应用程序都可以进行数据处理。事实上，接受数据的组件不一定要是ADO .NET组件，它可以是基于一个Microsoft Visual Studio的解决方案，也可以是任何运行在其它平台上的任何应用程序。 <br>
+以前做数据库访问的时候，需要一直与数据库保持连接，直到获取完所有满足需要的数据之后才会断开数据库连接，这种数据库访问方式称之为连接式数据访问技术。相比于以前的连接式数据访问技术，ADO.NET除了提供连接式数据访问技术之外，还提供了另一种断开式解决方案，那就是在内存中模拟一个数据库，也就是内存中的数据库。 <br>
+我们知道在实际的数据库技术中，每个数据库就是一个业务逻辑单元，一般来说这个数据库包含了实现一个应用软件或者一个网站所需要的全部数据。在这里数据库就是顶级对象，我们引用创建数据库时所用到的名词database来表示（因为创建数据库的SQL语句是create database），在一个数据库里可以包含有多个表(table)和视图(view)，除此之外还可以包含有一些外键关系等。在一个表(table)或者视图(view)里可以包含多个列(column)和行(row)。 <br>
+在ADO.NET中对上面提到的对象都在内存中进行了模拟，在内存中的数据库对象称之为DataSet，一个内存中的数据库(DataSet)可以包含多个在内存中的表(DataTable)和内存中的视图(DataView)，并且也允许在表存在一些关系(DataRelation)。同时在一个内存中的表(DataTable)或者内存中的视图(DataView)中也允许存在行(DataRow)和列(DataColumn)。 <br>
+物理数据库与内存数据库之间的各对象的对应关系如下： <br>
+<img src="https://ooo.0o0.ooo/2017/05/06/590dbb77ad73a.jpg" alt="2017-05-06_200232.jpg" title="">
+在上图中颜色相同的表示二者基本上是一种对应关系。</p>
+
+<p>在本篇将讲述6个ADO.NET中的常用对象：
+Connection对象 <br>
+Command对象 <br>
+DataReader对象 <br>
+DataAdapter对象 <br>
+DataSet对象 <br>
+DataTable对象 <br>
+DataRow对象 <br>
+DataColumn对象 <br>
+参数化SQL语句 <br>
+分页查询SQL语句   </p>
+
+<p>严格地说，在.net类库中并没有Connection、Command、DataAdapter和DataReader对象的，这是对相关的对象做了一个抽象。在实际的开发中，我们经常用到的数据库有Access、SQL Server、Oracle、MySQL等，尽管大部分都遵循SQL国际化标准，但是它们在遵循标准的前提下又做了一些扩充，并且即使遵循了相同的标准，但是实现方法并不相同，所以在某些情况下实现相同的功能可能在不同的数据库中SQL语句并不相同。 <br>
+于是，在ADO.NET也定义了一套用于访问数据库的标准，当然这个标准是以接口(interface)的形式提供的，各数据库厂商只要实现了这个接口就能在ADO.NET下正常工作（这也是接口的作用，接口就是用于指定规范，自己本身并不实现，在Java中针对数据库访问也有一套接口留待各数据库来实现）。当然在.net类库中微软已经提供对Access、SQL Server和Oracle数据库对上面提到的接口的实现。 <br>
+在ADO.NET中定义的这一套接口是IDbConnection、IDbCommand、IDbDataAdapter和IDataReader，并且还有一套实现这些接口的抽象类，分别是DbConnection、DbCommand、DbDataAdapter和DataReader。 <br>
+<img src="https://ooo.0o0.ooo/2017/05/06/590dbe33cce82.jpg" alt="2017-05-06<em>201215.jpg" title="">
+<img src="https://ooo.0o0.ooo/2017/05/06/590dbe7baf57c.jpg" alt="2017-05-06</em>201531.jpg" title=""></p>
+
+<p>上图最上面的是数据库访问接口，紧接着的是数据库访问抽象类，下面是针对不同数据库中实现这些接口的类，并且在括号中注明了其所在的命名空间，比如针对MySQL数据的数据库访问类就位于MySql.Data.MySqlClient命名空间下，关于MySql的数据库访问类需要到MySql数据库的官方网站去下载，它的官方网站是http://www.mysql.com。其它的数据库访问类都在.net类库中自带了。 <br>
+注意：访问SQL Server7.0以下版本的SQL Server数据库时需要用 
+System.Data.OleDb命名空间下一套数据库访问类，虽然这一套数据库访问类同样也能访问SQL Server2000以上版本，但是没有办法利用SQL Server数据库的一些新特性，所以不建议使用System.Data.OleDb命名空间下的类访问SQL Server2000以上的版本。 <br>
+在本篇的讲述中，针对SQL Server数据库讲述Connection、Command、DataAdapter和DataReader对象的用法，它们在其它数据库中也有对应的类，除了有些SQL语句语法不一样之外，用法是基本一样的。   </p>
+
+<h3 id="connection">Connection对象</h3>
+
+<p>Connection对象也称为数据库连接对象，Connection对象的功能是负责对数据源的连接。所有Connection对象的基类都是DbConnection类。 <br>
+Connection对象有两个重要属性： <br>
+ConnectionString：表示用于打开 SQL Server 数据库的字符串； <br>
+State：表示 Connection 的状态，有Closed和Open两种状态。 <br>
+Connection对象有两个重要方法： <br>
+Open()方法：指示打开数据库； <br>
+Close()方法：指示关闭数据库。   </p>
+
+<h3 id="command">Command对象</h3>
+
+<p>Command对象也称为数据库命令对象，Command对象主要执行包括添加、删除、修改及查询数据的操作的命令。也可以用来执行存储过程。用于执行存储过程时需要将Command对象的CommandType 属性设置为CommandType.StoredProcedure，默认情况下CommandType 属性为CommandType.Text，表示执行的是普通SQL语句。 <br>
+Command主要有三个方法： <br>
+ExecuteNonQuery () ：执行一个SQL语句，返回受影响的行数，这个方法主要用于执行对数据库执行增加、更新、删除操作，注意查询的时候不是调用这个方法。 <br>
+ExecuteReader ()：执行一个查询的SQL语句，返回一个DataReader对象。 <br>
+ExecuteScalar ()：从数据库检索单个值。这个方法主要用于统计操作。   </p>
+
+<p>在操作数据库的时候，为了提高性能，都遵循一个原则：数据库连接对象应该尽可能晚打开，尽可能早关闭。在上面的例子中，在Command对象需要执行数据库操作之前才打开数据库连接对象，执行数据库操作之后马上就关闭了数据库连接对象。希望初学者们记住这个原则。   </p>
+
+<h3 id="datareader">DataReader对象</h3>
+
+<p>DataReader对象是一个读取行的只读流的方式，绑定数据时比使用数据集方式性能要高，因为它是只读的，所以如果要对数据库中的数据进行修改就需要借助其它方法将所作的更改保存到数据库。 <br>
+DataReader对象不能通过直接实例化，必须借助与相关的Command对象来创建实例，例如用SqlCommand的实例的ExecuteReader()方法可以创建SqlDataReader实例。 <br>
+因为DataReader对象读取数据时需要与数据库保持连接，所以在使用完DataReader对象读取完数据之后应该立即调用它的Close()方法关闭，并且还应该关闭与之相关的Connection对象。在.net类库中提供了一种方法，在关闭DataReader对象的同时自动关闭掉与之相关的Connection对象，使用这种方法是可以为ExecuteReader()方法指定一个参数。
+并且DataReader对象读取数据有三种方式： <br>
+一种是按查询的时候列的索引用指定的方式来读取列值，无需做相应转换，如GetByte（int i）就是读取第i列的值并且转换成byte类型的值。第这种方法的优点是指定列后直接将该列的直接读取出来了，无需再转换，缺点是一旦指定的列不能按照指定的方式转换时就会抛出异常，比如数据库里字段的类型是string类型或者该字段的值为空时按照GetByte(i)这种方式读取会抛出异常。 <br>
+第二种方式就是按照列索引的方式读取，在读取的时候并不进行值转换，如：reader[5]就是读取第5列的值（这里reader是一个Reader对象的实例），这样得到的值是一个object类型的值，这也很好理解，因为在数据库可能存储各种类型的值，而object是所有类的基类，所以这个方法不会抛出异常。如果要得到它的正确类型，还需要根据数据库里的字段进行进行相应转换。 <br>
+最后一种是按照列名的方式去读，并且在读的时候也不进行相应转换，得到的是object类型的值。 <br>
+综合前面三种方式各有特点，第一种方式最直接，但是有可能抛出异常，第二种方式比第一种稍微灵活一些，我们可以根据读取到值为空（在.net里用DBNull类来表示，可以表示数据库中任意数据类型的空值），我们就不进行相应的类型转换，避免出现异常。第三种方式按照列的名字来读取数据，也需要按照第二种方式进行一定的转换。就性能来说第一种最高，第二种稍低，第三种最低（这很好理解，假设要在一个旅馆里找人直通过房间号找肯定比通过名字找快），就灵活性来说第三种最灵活，第二种次之，第一种最不灵活（假如在后来编写SQL语句中更改了列的索引，第一种和第二种都可能出现问题）。实际开发中根据实际情况选择合适的方式。</p>
+
+<h3 id="dataadapter">DataAdapter对象</h3>
+
+<p>DataAdapter对象也称之为数据适配器对象，DataAdapter对象利用数据库连接对象(Connection)连接的数据源，使用数据库命令对象(Command)规定的操作从数据源中检索出数据送往数据集对象(DataSet)，或者将数据集中经过编辑后的数据送回数据源。 <br>
+数据适配器将数据填入数据集时调用方法Fill()。</p>
+
+<p>当dataAdapter1调用Fill() 方法时将使用与之相关联的命令组件所指定的 SELECT 语句从数据源中检索行。然后将行中的数据添加到 DataSet 中的DataTable 对象中或者直接填充到DataTable的实例中，如果 DataTable 对象不存在，则自动创建该对象。 <br>
+当执行上述SELECT语句时，与数据库的连接必须有效，但不需要用语句将连接对象打开。如果调用Fill()方法之前与数据库的连接已经关闭，则将自动打开它以检索数据，执行完毕后再自动将其关闭。如果调用Fill()方法之前连接对象已经打开，则检索后继续保持打开状态。 <br>
+<strong>注意：一个数据集中可以放置多张数据表。但是每个数据适配器只能够对应于一张数据表。*</strong></p>
+
+<h3 id="dataset">DataSet对象</h3>
+
+<p>DataSet对象也称为数据集对象，DataSet对象用于表示那些储存在内存中的数据，它相当于一个内存中的数据库。它可以包括多个DataTable对象及DataView对象。DataSet主要用于管理存储在内存中的数据以及对数据的断开操作。 <br>
+由于DataSet对象提供了一个离线的数据源，这样减轻了数据库以及网络的负担，在设计程序的时候可以将DataSet对象作为程序的数据源。   </p>
+
+<h3 id="datatable">DataTable对象</h3>
+
+<p>DataTable 是 ADO.NET 库中的核心对象，就像普通的数据库中的表一样，它也有行和列。它主要包括DataRow和DataColumn，分别代表行和列。 <br>
+(1) 数据行(DataRow) <br>
+数据行是给定数据表中的一行数据，或者说是数据表中的一条记录。它可能代表一个学生、一位用户、一张订单或者一件货物的相关数据。DataRow对象的方法提供了对表中数据的插入、删除、更新和查看等功能。 <br>
+(2) 数据列(DataColumn) <br>
+数据表中的数据列(又称字段)定义了表的数据结构，例如，可以用它确定列中的数据类型和大小，还可以对其他属性进行设置。例如，确定列中的数据是否是只读的、是否是主键、是否允许空值等；还可以让列在一个初始值的基础上自动增殖，增值的步长还可以自行定义。 <br>
+某列的值需要在数据行的基础上进行。   </p>
+
+<h3 id="sql">参数化SQL语句</h3>
+
+<p>避免SQL注入的方法有两种：一是所有的SQL语句都存放在存储过程中，这样不但可以避免SQL注入，还能提高一些性能，并且存储过程可以由专门的数据库管理员(DBA)编写和集中管理（这种做法我在一些公司见过），不过这种做法有时候针对相同的几个表有不同条件的查询，SQL语句可能不同，这样就会编写大量的存储过程，所以有人提出了第二种方案：参数化SQL语句。</p>
+
+<h3 id="sql">分页查询SQL语句</h3>
+
+<p>在实际中我们经常遇到表里的记录数非常庞大（数万至数百万），而一次只显示几十条数据的情况，如果我们直接用下面的SQL语句查询并填充到DataTable的话，将是一个非常恐怖的事情。 <br>
+分页查询就是根据需要每次只返回所需要的数据，而不用每次都从数据库中全部把数据提取出来，这样可以降低程序与数据库之间的数据传送量，并且还可以提高程序的性能。</p>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "2017050607.html";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
