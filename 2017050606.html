@@ -55,6 +55,23 @@ FileUpload控件是一个很重要的控件，它被Web服务器最终解释为�
 ###带图片预览功能的FileUpload控件
 通过上面的讲述，我们知道一些web服务器控件在vs2005下没有javascript客户端事件的提示，不过只要我们确信这个事件对应的HTML控件确实有，我们可以自行添加的，下面我们就来做一个让FileUpload控件带有图片预览功能的例子。
 
+###Literal控件
+Literal控件是一个类似于Label控件的控件，都是用来呈现文字的。前面我说过，虽然通过Response.Write()方法可以直接输出文字，但是这样输出的文字有可能在<html></html>标记之外，破坏了网页的结构，使之不再符合XHTML标准。   
+对于静态文字，我们可以直接在HTML代码中书写即可，而没有必要使用Literal 控件或 Label 控件。但是在某些情况下我们却希望在某个位置设置一些文字，那么我们就可以先在期望输出文字的地方放置一个Literal控件，将来在程序代码中根据程序逻辑动态设置Literal控件的Text属性来控制要输出的文字。   
+尽管在某种程度上，Literal 控件用法与 Label 控件用法类似，但是不同的是 Literal 控件不能用于将css样式应用于显示的文本。   
+另外Literal 控件还有一个Mode属性，它用来控制如何呈现Literal 控件中的内容。这个属性是一个枚举，有三个枚举值：   
+PassThrough：直接呈现Literal 控件中的内容。  
+Encode：控件的内容转换为 HTML 编码的字符串。   
+Transform：从控件的内容中移除不受支持的标记语言元素。如果 Literal 控件在支持 HTML 或 XHTML 的浏览器上呈现，则不会修改该控件的内容。   
+
+###PlaceHolder控件
+PlaceHolder控件控件的作用和Panel控件的作用非常类似，也是用作容器控件，不过控件本身在客户端不产生任何可见HTML标记。   
+PlaceHolder控件有一个Controls属性，这个属性表示这个容器控件容纳的控件的集合，Controls属性是ControlCollection类的一个实例，这个类用Add()方法向集合中增加控件，用Remove()删除控件，还有一个Count属性表示这个集合中总共有多少个控件。   
+
+##小结：
+Panel和PlaceHolder作为控件的容器，在很多地方是相似的，不同的是PlaceHolder不会在客户端产生任何可见的输出，而Panel还可以设置背景图片等。
+Label和Literal控件常用来显示文字（也可以成为文本的容器哦），在很多地方是相似的，不过不能设置Literal的客户端css样式，并且Literal对显示的文本的控制能力更灵活一些，利用Mode属性可以方便地显示HTML代码。
+
 <!-- markdown end -->
 </div>
 <div class="entry" id="main">
@@ -93,6 +110,26 @@ TextMode="MultiLine"：用来输入多行文本   </p>
 <h3 id="fileupload">带图片预览功能的FileUpload控件</h3>
 
 <p>通过上面的讲述，我们知道一些web服务器控件在vs2005下没有javascript客户端事件的提示，不过只要我们确信这个事件对应的HTML控件确实有，我们可以自行添加的，下面我们就来做一个让FileUpload控件带有图片预览功能的例子。</p>
+
+<h3 id="literal">Literal控件</h3>
+
+<p>Literal控件是一个类似于Label控件的控件，都是用来呈现文字的。前面我说过，虽然通过Response.Write()方法可以直接输出文字，但是这样输出的文字有可能在标记之外，破坏了网页的结构，使之不再符合XHTML标准。 <br>
+对于静态文字，我们可以直接在HTML代码中书写即可，而没有必要使用Literal 控件或 Label 控件。但是在某些情况下我们却希望在某个位置设置一些文字，那么我们就可以先在期望输出文字的地方放置一个Literal控件，将来在程序代码中根据程序逻辑动态设置Literal控件的Text属性来控制要输出的文字。 <br>
+尽管在某种程度上，Literal 控件用法与 Label 控件用法类似，但是不同的是 Literal 控件不能用于将css样式应用于显示的文本。 <br>
+另外Literal 控件还有一个Mode属性，它用来控制如何呈现Literal 控件中的内容。这个属性是一个枚举，有三个枚举值： <br>
+PassThrough：直接呈现Literal 控件中的内容。 <br>
+Encode：控件的内容转换为 HTML 编码的字符串。 <br>
+Transform：从控件的内容中移除不受支持的标记语言元素。如果 Literal 控件在支持 HTML 或 XHTML 的浏览器上呈现，则不会修改该控件的内容。   </p>
+
+<h3 id="placeholder">PlaceHolder控件</h3>
+
+<p>PlaceHolder控件控件的作用和Panel控件的作用非常类似，也是用作容器控件，不过控件本身在客户端不产生任何可见HTML标记。 <br>
+PlaceHolder控件有一个Controls属性，这个属性表示这个容器控件容纳的控件的集合，Controls属性是ControlCollection类的一个实例，这个类用Add()方法向集合中增加控件，用Remove()删除控件，还有一个Count属性表示这个集合中总共有多少个控件。   </p>
+
+<h2 id="">小结：</h2>
+
+<p>Panel和PlaceHolder作为控件的容器，在很多地方是相似的，不同的是PlaceHolder不会在客户端产生任何可见的输出，而Panel还可以设置背景图片等。
+Label和Literal控件常用来显示文字（也可以成为文本的容器哦），在很多地方是相似的，不过不能设置Literal的客户端css样式，并且Literal对显示的文本的控制能力更灵活一些，利用Mode属性可以方便地显示HTML代码。</p>
 <!-- content end -->
 </div>
 <br>
