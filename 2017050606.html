@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+[原文地址](http://blog.csdn.net/zhoufoxcn/article/details/3019670)
+
+##知识点：
+Button控件
+TextBox控件
+Web服务器控件的特殊客户端事件
+FileUpload控件
+Literal控件
+Panel控件
+PlaceHolder控件
+
+###Button控件
+Button控件是asp.net开发时最常见的控件之一。
+
+###TextBox控件用来提供一个输入框，这个输入框默认是输入单行文本的，但是我们可以设置它的TextMode属性来控制输入框的形式。它可以是以下三个值：   
+TextMode="SingleLine"：用来输入单行文本   
+TextMode="Password"：用来输入密码   
+TextMode="MultiLine"：用来输入多行文本   
+
+###FileUpload控件
+FileUpload控件是一个很重要的控件，它被Web服务器最终解释为形如`<input type=”file”…/>`这样的普通HTML控件。   
+它有如下常见属性：   
+![2017-05-06_115841.jpg](https://ooo.0o0.ooo/2017/05/06/590d4a090b112.jpg)
+
+这个HttpPostedFile对象能帮我们做很多工作，它也有一些有用的常见属性：   
+![2017-05-06_163724.jpg](https://ooo.0o0.ooo/2017/05/06/590d8b964c93d.jpg)
+
+###带图片预览功能的FileUpload控件
+通过上面的讲述，我们知道一些web服务器控件在vs2005下没有javascript客户端事件的提示，不过只要我们确信这个事件对应的HTML控件确实有，我们可以自行添加的，下面我们就来做一个让FileUpload控件带有图片预览功能的例子。
+
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<p><a href="http://blog.csdn.net/zhoufoxcn/article/details/3019670">原文地址</a></p>
+
+<h2 id="">知识点：</h2>
+
+<p>Button控件
+TextBox控件
+Web服务器控件的特殊客户端事件
+FileUpload控件
+Literal控件
+Panel控件
+PlaceHolder控件</p>
+
+<h3 id="button">Button控件</h3>
+
+<p>Button控件是asp.net开发时最常见的控件之一。</p>
+
+<h3 id="textboxtextmode">TextBox控件用来提供一个输入框，这个输入框默认是输入单行文本的，但是我们可以设置它的TextMode属性来控制输入框的形式。它可以是以下三个值：</h3>
+
+<p>TextMode="SingleLine"：用来输入单行文本 <br>
+TextMode="Password"：用来输入密码 <br>
+TextMode="MultiLine"：用来输入多行文本   </p>
+
+<h3 id="fileupload">FileUpload控件</h3>
+
+<p>FileUpload控件是一个很重要的控件，它被Web服务器最终解释为形如<code>&lt;input type=”file”…/&gt;</code>这样的普通HTML控件。 <br>
+它有如下常见属性： <br>
+<img src="https://ooo.0o0.ooo/2017/05/06/590d4a090b112.jpg" alt="2017-05-06_115841.jpg" title=""></p>
+
+<p>这个HttpPostedFile对象能帮我们做很多工作，它也有一些有用的常见属性： <br>
+<img src="https://ooo.0o0.ooo/2017/05/06/590d8b964c93d.jpg" alt="2017-05-06_163724.jpg" title=""></p>
+
+<h3 id="fileupload">带图片预览功能的FileUpload控件</h3>
+
+<p>通过上面的讲述，我们知道一些web服务器控件在vs2005下没有javascript客户端事件的提示，不过只要我们确信这个事件对应的HTML控件确实有，我们可以自行添加的，下面我们就来做一个让FileUpload控件带有图片预览功能的例子。</p>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "2017050606.html";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
