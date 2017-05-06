@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+[原文地址](http://blog.csdn.net/zhoufoxcn/article/details/2990318)
+
+##知识点：
+Page类介绍
+Page的生命周期
+IsPostBack属性
+ClientScriptManager类
+回调技术(CallBack)
+
+##内容
+###Page类介绍
+asp.Net有时候也被成为WebForm，因为开发一个asp.net页面就像开发一个WinFrom窗体一样，我们同样可以采用拖拽控件、双击产生相关处理代码的方法。在asp.net中，创建一个页面可以采用两种模型。
+
+###单页模型
+单页模型的特点是HTML标记、控件代码及服务器端运行的C#代码全部包含在一个aspx页面中，Web服务器第一次运行该页面的时候会将这个页面生成一个类文件，对于上面的Index.aspx页面，会生成ASP.Index_aspx的类，然后再将这个ASP.Index_aspx类编译成IL代码，Web服务器通过CLR（Common Language Runtime，通用语言运行环境）运行相应的IL代码。   
+单页模型的缺点是页面和代码混在一起，维护起来较为麻烦。
+
+###代码页面分离模式
+代码页面模式就是将页的标记(HTML代码)和服务器端元素放在.aspx页面中，而也代码在位于一个.aspx.cs中。采用默认方式创建的aspx网页就是这种方式。
+
+###asp.net页面的声明周期
+asp.net页面运行的时候将经历一个声明周期，这个生命周期中会进行一系列的操作，调用一系列的方法。了解asp.net页面的生命周期对于精确控制页面的控件呈现方式和行为非常重要。   
+一般说来一个常规页面要经历如下几个生命周期阶段：
+![2017-05-06_115619.jpg](https://ooo.0o0.ooo/2017/05/06/590d497c1f82e.jpg)
+
+在页的生命周期中，一般会有如下事件：
+![2017-05-06_115841.jpg](https://ooo.0o0.ooo/2017/05/06/590d4a090b112.jpg)
+
+**需要注意的是，每个asp.net控件也有与asp.net类似的生命周期，如果aspx页面中包含有asp.net服务器控件，那么在调用页面的方法时也会调用控件的相关方法。**   
+另外，Web应用程序是无状态的。每次请求一个新网页或者刷新页面服务器都会创建一个当前页的新实例，这就意味着无法获取页面的以前的信息，如果确实需要这么做，需要采用额外的机制。
+
+
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<p><a href="http://blog.csdn.net/zhoufoxcn/article/details/2990318">原文地址</a></p>
+
+<h2 id="">知识点：</h2>
+
+<p>Page类介绍
+Page的生命周期
+IsPostBack属性
+ClientScriptManager类
+回调技术(CallBack)</p>
+
+<h2 id="">内容</h2>
+
+<h3 id="page">Page类介绍</h3>
+
+<p>asp.Net有时候也被成为WebForm，因为开发一个asp.net页面就像开发一个WinFrom窗体一样，我们同样可以采用拖拽控件、双击产生相关处理代码的方法。在asp.net中，创建一个页面可以采用两种模型。</p>
+
+<h3 id="">单页模型</h3>
+
+<p>单页模型的特点是HTML标记、控件代码及服务器端运行的C#代码全部包含在一个aspx页面中，Web服务器第一次运行该页面的时候会将这个页面生成一个类文件，对于上面的Index.aspx页面，会生成ASP.Index<em>aspx的类，然后再将这个ASP.Index</em>aspx类编译成IL代码，Web服务器通过CLR（Common Language Runtime，通用语言运行环境）运行相应的IL代码。 <br>
+单页模型的缺点是页面和代码混在一起，维护起来较为麻烦。</p>
+
+<h3 id="">代码页面分离模式</h3>
+
+<p>代码页面模式就是将页的标记(HTML代码)和服务器端元素放在.aspx页面中，而也代码在位于一个.aspx.cs中。采用默认方式创建的aspx网页就是这种方式。</p>
+
+<h3 id="aspnet">asp.net页面的声明周期</h3>
+
+<p>asp.net页面运行的时候将经历一个声明周期，这个生命周期中会进行一系列的操作，调用一系列的方法。了解asp.net页面的生命周期对于精确控制页面的控件呈现方式和行为非常重要。 <br>
+一般说来一个常规页面要经历如下几个生命周期阶段：
+<img src="https://ooo.0o0.ooo/2017/05/06/590d497c1f82e.jpg" alt="2017-05-06_115619.jpg" title=""></p>
+
+<p>在页的生命周期中，一般会有如下事件：
+<img src="https://ooo.0o0.ooo/2017/05/06/590d4a090b112.jpg" alt="2017-05-06_115841.jpg" title=""></p>
+
+<p><strong>需要注意的是，每个asp.net控件也有与asp.net类似的生命周期，如果aspx页面中包含有asp.net服务器控件，那么在调用页面的方法时也会调用控件的相关方法。</strong> <br>
+另外，Web应用程序是无状态的。每次请求一个新网页或者刷新页面服务器都会创建一个当前页的新实例，这就意味着无法获取页面的以前的信息，如果确实需要这么做，需要采用额外的机制。</p>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "2017050605.html";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
