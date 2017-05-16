@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+本章内容   
+- 节点的概念   
+- 5个常用DOM方法:getElementById、getElementsByTagName、getElementsByClassName、getAttribute和setAttribute   
+
+##3.1 文档：DOM中的“D”
+##3.2 对象：DOM中的“O”
+JavaScript语言里的对象可以分为三种类型。   
+- 用户定义对象（user-defined object）：由程序员自行创建的对象。   
+- 内建对象（native object）：内建在JavaScript语言里的对象，如Array、Math和Date等。   
+- 宿主对象（host object）：由浏览器提供的对象。   
+##3.3 模型：DOM中的“M”代表着“Model”（模型），但说它代表着“Map”（地图）也未尝不可。   
+DOM把一份文档表示为一棵树。更具体地说，DOM把文档表示为一棵家谱树。
+##3.4 节点
+节点（node），它表示网络中的一个连接点。一个网络就是由一些节点构成的集合。   
+文档是由节点构成的集合，只不过此时的节点是文档树上的树枝和树叶而已。
+###3.4.1 元素节点
+DOM的原子是__元素节点（element node）__。   
+元素可以包含其他的元素。
+###3.4.2  文本节点
+元素节点只是节点类型的一种。    
+在XHTML文档里，文本节点总是被包含在元素节点的内部。但并非所有的元素节点都包含有文本节点。
+###3.4.3 属性节点
+属性结点用来对元素做出更具体的描述。
+###3.4.4 CSS
+我们可以通过CSS（层叠样式表）告诉浏览器应该如何显示一份文档的内容。   
+`
+selector{
+    property: value;
+}
+`   
+继承（inheritance）是CSS技术中的一项强大功能。CSS也把文档的内容视为一棵节点树。节点树上的各个元素将继承其父元素的样式属性。   
+
+###3.4.5 获取元素
+有3种DOM方法可获取元素节点，分别是通过元素ID、通过标签名字和通过类名字来获取。   
+1.getElementById   
+DOM提供了一个名为getElementById的方法，这个方法将返回一个与那个有着给定id属性值的元素节点对应的对象。   
+`
+getElementById(id);
+`   
+2.getElementsByTagName   
+getElementsByTagName方法返回一个对象数组，每个对象分别对应着文档里有着
+给定标签的一个元素。   
+`
+element.getElementsByName(tag);
+`   
+3.getElementsByClassName   
+这个方法让我们能够通过class属性中的类名来访问元素。
+`
+getElementsByClassName(class)
+`   
+
+
+
+
+
+
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "2017051601.html";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
