@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+http://www.cnblogs.com/jillzhang/archive/2008/01/28/1055846.html
+
+本文的出发点：
+通过阅读本文，能解决以下的问题   
+
+- 什么是契约   
+- 契约有几种,他们都有什么用途   
+- 如何定义契约   
+- 契约是独立于平台的么   
+- 契约和以往哪种技术比较相像，又有什么不同   
+
+##契约有几种？,他们都有什么用途   
+在WCF中，契约分为四种，它们分别为：
+用于定义服务操作的服务契约：Service Contract   
+
+这种级别的契约又包括两种：ServiceContract和OperationContract   
+ServiceContract用于类或者结构上，用于指示WCF此类或者结构能够被远程调用，而OperationContract用于类中的方法（Method）上，用于指示WCF该方法可被远程调用。
+
+用于自定义数据结构的数据契约：Data Contract
+数据契约也分为两种：DataContract和DataMember.DataContract用于类或者结构上，指示 WCF此类或者结构能够被序列化并传输，而DataMember只能用在类或者结构的属性(Property)或者字段（Field）上，指示WCF该属性或者字段能够被序列化传输。
+
+用于自定错误异常的异常契约：Fault Contract   
+FaultContract用于自定义错误异常的处理方式，默认情况下，当服务端抛出异常的时候，客户端能接收到异常信息的描述，但这些描述往往格式统一，有时比较难以从中获取有用的信息，此时，我们可以自定义异常消息的格式，将我们关心的消息放到错误消息中传递给客户端，此时需要在方法上添加自定义一个错误消息的类，然后在要处理异常的函数上加上FaultContract，并将异常信息指示返回为自定义格式。
+
+用于控制消息格式的消息契约：Message Contract   
+简单的说，它能自定义消息格式，包括消息头，消息体，还能指示是否对消息内容进行加密和签名。   
+
+##如何定义契约
+     其实上面落里罗嗦说了一大堆，似乎契约使用起来应该很难的样子了，可事实上，契约的使用是很简单的，它无非就是在普通的程序结构上添加一些声明性的属性就可以了，比如我们可以直接在类上声明ServerContractAttribute，此时这个类就能被远程客户端访问到，而在类中的方法中(Method)添加OperationContractAttribute就能将方法暴露给远程客户端，其他的契约也一样的用法，比较难得还是消息契约和错误契约，当也很简单。
+
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "2017051901.html";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+</body>
+</html>
